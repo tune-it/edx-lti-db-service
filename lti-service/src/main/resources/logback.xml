@@ -10,7 +10,7 @@
 	</appender>
 
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>piggy-bank.log</file>
+		<file>openedx.log</file>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>INFO</level>
 		</filter>
@@ -21,7 +21,7 @@
 	</appender>
 
 	<appender name="DEV_FILE" class="ch.qos.logback.core.FileAppender">
-		<file>piggy-bank-full.log</file>
+		<file>openedx-full.log</file>
 		<append>true</append>
 		<encoder>
 			<pattern>%-5level %logger{25} - %boldWhite(%msg%n)</pattern>
