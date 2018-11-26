@@ -9,7 +9,10 @@ public class Lab {
 
     @Lti
     @PostMapping("/api/rest/lti/{labId}")
-    public String doPost(@PathVariable("labId") String labId, @RequestHeader HttpHeaders headers, @RequestBody String body) {
+    public String doPost(@PathVariable("labId") String labId,
+                         @RequestParam(name = "custom_x", required = false) Integer x,
+                         @RequestHeader HttpHeaders headers,
+                         @RequestBody String body) {
 
         System.out.println("####################################### REQUEST BODY");
         System.out.println(body);
@@ -24,7 +27,7 @@ public class Lab {
             );
         }
 
-        return "Task for lab work #" + labId;
+        return "Task for lab work #" + labId + (x == null ? ";" : ("; x = " + x));
     }
 
 }
