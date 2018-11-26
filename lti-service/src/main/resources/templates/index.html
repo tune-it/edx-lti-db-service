@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
+</head>
+<body ng-app="BlankApp" ng-cloak>
+    <md-toolbar class="md-primary">
+        <div layout="row" layout-padding layout-align="space-between center">
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">Lti Service Stub</h2>
+            </div>
+            <span style="flex: 1 1 auto;" />
+        </div>
+    </md-toolbar>
+
+    <div ng-cloak="" flex>
+        <md-content layout-padding="">
+            <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">
+                            User: <span th:text="${username}"></span>
+                        </span>
+                        <span class="md-subhead">
+                            Custom param: <span th:text="${custom_param}"></span>
+                        </span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-sm card-media"></div>
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Кнопощка 1</md-button>
+                    <md-button>Кнопощка 2</md-button>
+                </md-card-actions>
+            </md-card>
+
+            <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">
+                            User: Default
+                        </span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-sm card-media"></div>
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Кнопощка 3</md-button>
+                    <md-button>Кнопощка 4</md-button>
+                </md-card-actions>
+            </md-card>
+        </md-content>
+    </div>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+<!-- Your application bootstrap  -->
+<script src="/assets/js/edx.js"></script>
+
+</body>
+</html>

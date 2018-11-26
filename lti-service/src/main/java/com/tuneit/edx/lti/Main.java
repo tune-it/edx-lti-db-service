@@ -1,5 +1,6 @@
 package com.tuneit.edx.lti;
 
+import com.tuneit.edx.lti.config.RequestContextListenerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +20,8 @@ public class Main extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(
-            Main.class
+            Main.class,
+            RequestContextListenerConfiguration.class
             // may be add other config classes here
         );
     }
