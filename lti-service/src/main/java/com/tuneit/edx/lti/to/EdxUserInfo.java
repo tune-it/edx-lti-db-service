@@ -1,8 +1,10 @@
 package com.tuneit.edx.lti.to;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,44 +13,26 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "username",
+        "version",
+        "enrollmentStatusHash",
+        "header_urls"
+})
 public class EdxUserInfo {
 
-    String username = "";
-    String version = "";
-    String enrollmentStatusHash = "";
-    HeaderUrls header_urls = new HeaderUrls();
+    @JsonProperty("username")
+    private String username;
 
-    @Override
-    public String toString() {
-        return "EdxUserInfo {" +
-                "username = '" + username + '\'' +
-                ", version = '" + version + '\'' +
-                ", enrollmentStatusHash = '" + enrollmentStatusHash + '\'' +
-                ", header_urls = " + header_urls.toString() +
-                '}';
-    }
+    @JsonProperty("version")
+    private Integer version;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class HeaderUrls {
+    @JsonProperty("enrollmentStatusHash")
+    private String enrollmentStatusHash;
 
-        String learner_profile = "";
-        String resume_block = "";
-        String logout = "";
-        String account_settings = "";
+    @JsonProperty("header_urls")
+    private HeaderUrls headerUrls;
 
-        @Override
-        public String toString() {
-            return "HeaderUrls {" +
-                    "learner_profile = '" + learner_profile + '\'' +
-                    ", resume_block = '" + resume_block + '\'' +
-                    ", logout = '" + logout + '\'' +
-                    ", account_settings = '" + account_settings + '\'' +
-                    '}';
-        }
-    }
 }
