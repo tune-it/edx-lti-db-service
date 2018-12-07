@@ -1,12 +1,20 @@
 package com.tuneit.edx.lti.rest;
 
+import com.tuneit.edx.lti.web.ScoreRestAPI;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import java.io.IOException;
+
 /**
  *
  * @author jek
  */
 public class Score {
 
-    public static final String xml = "<?xml version = \"1.0\" encoding = \"UTF-8\"?>\n"
+    public static final String XML_PATTERN =
+              "<?xml version = \"1.0\" encoding = \"UTF-8\"?>\n"
             + "            <imsx_POXEnvelopeRequest xmlns = \"some_link (may be not required)\">\n"
             + "              <imsx_POXHeader>\n"
             + "                <imsx_POXRequestHeaderInfo>\n"
@@ -18,7 +26,7 @@ public class Score {
             + "                <replaceResultRequest>\n"
             + "                  <resultRecord>\n"
             + "                    <sourcedGUID>\n"
-            + "                      <sourcedId>feb-123-456-2929::28883</sourcedId>\n"
+            + "                      <sourcedId>####</sourcedId>\n"
             + "                    </sourcedGUID>\n"
             + "                    <result>\n"
             + "                      <resultScore>\n"
@@ -30,4 +38,19 @@ public class Score {
             + "                </replaceResultRequest>\n"
             + "              </imsx_POXBody>\n"
             + "            </imsx_POXEnvelopeRequest>";
+
+    public static String getXmlContent(String sourcedId) {
+        return XML_PATTERN.replace("####", sourcedId);
+    }
+
+    public static int push(String sourcedId, String outcomeServiceUrl) throws IOException {
+        Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://localhost:18010")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build();
+
+        ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
+        Call<Void> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId));
+        return response.execute().code();
+    }
 }

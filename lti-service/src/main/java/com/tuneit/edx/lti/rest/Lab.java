@@ -55,10 +55,13 @@ public class Lab {
         model.put("username", (userInfo.getUsername() == null ? "Guest" : userInfo.getUsername()));
         model.put("custom_param", (x == null ? "nothing" : x));
 
-        System.out.println("######## LIS PARAMS");
-        System.out.println("lis_result_sourcedid = " + sourcedId);
-        System.out.println("lis_outcome_service_url = " + serviceUrl);
-        System.out.println();
+        try {
+            System.out.println("Push score to URL: " + serviceUrl);
+            int result = Score.push(sourcedId, serviceUrl);
+            System.out.println("RETURN CODE = " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         /**  передаем управление движку themyleaf (см. classpath:/templates/index.html)  */
         return "index";
