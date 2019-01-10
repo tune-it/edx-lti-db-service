@@ -2,13 +2,13 @@ package com.tuneit.edx.lti.rest;
 
 import com.tuneit.edx.lti.web.ScoreRestAPI;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import java.io.IOException;
 
 /**
- *
  * @author jek
  */
 public class Score {
@@ -51,6 +51,8 @@ public class Score {
 
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
         Call<Void> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId));
-        return response.execute().code();
+        Response<Void> execute = response.execute();
+        System.out.println("*&^34*&^34*&^34*&^34 =====>> " + execute.message());
+        return execute.code();
     }
 }

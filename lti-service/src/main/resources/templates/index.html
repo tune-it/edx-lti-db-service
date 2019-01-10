@@ -9,7 +9,7 @@
     <md-toolbar class="md-primary">
         <div layout="row" layout-padding layout-align="space-between center">
             <div class="md-toolbar-tools">
-                <h2 class="md-flex">Lti Service Stub</h2>
+                <h2 class="md-flex">Лабораторная работа №<span th:text="${numberOfLab}"></span></h2>
             </div>
             <span style="flex: 1 1 auto;" />
         </div>
@@ -17,42 +17,15 @@
 
     <div ng-cloak="" flex>
         <md-content layout-padding="">
-            <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">
-                            User: <span th:text="${username}"></span>
-                        </span>
-                        <span class="md-subhead">
-                            Custom param: <span th:text="${custom_param}"></span>
-                        </span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-sm card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Кнопощка 1</md-button>
-                    <md-button>Кнопощка 2</md-button>
-                </md-card-actions>
-            </md-card>
+            <form class="sql-form" method="post" th:object="${query}" th:action="@{'/api/rest/lti/' + ${numberOfLab} + '/result'}">
 
-            <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">
-                            User: Default
-                        </span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-sm card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Кнопощка 3</md-button>
-                    <md-button>Кнопощка 4</md-button>
-                </md-card-actions>
-            </md-card>
+                <mat-form-field class="input-full-width">
+                    <textarea matInput placeholder="SQL код" th:field="*{textQuery}"></textarea>
+                </mat-form-field>
+
+                <md-button type="submit">Отправить</md-button>
+
+            </form>
         </md-content>
     </div>
 
