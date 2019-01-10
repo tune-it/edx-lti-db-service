@@ -8,11 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Random;
 
 @Controller
 public class Lab {
+
+    public static final String LIS_SOURCED_ID_NAME  = "lis_result_sourcedid";
+
+    public static final String LIS_OUTCOME_URL_NAME = "lis_outcome_service_url";
+
+    public static final String CURRENT_LAB_ID_NAME  = "";
 
     /**
      * Метод для отладки (для dev режима). Используется
@@ -23,8 +30,9 @@ public class Lab {
      * @return название themyleaf-шаблона, который будет обработан, как результат текущего запроса
      */
     @GetMapping("/debug/edx/home")
-    public String doGet(@RequestParam(name="lis_result_sourcedid", required = false) String sourcedId,
-                        @RequestParam(name="lis_outcome_service_url", required = false) String serviceUrl,
+    public String doGet(@RequestParam(name=LIS_SOURCED_ID_NAME, required = false) String sourcedId,
+                        @RequestParam(name=LIS_OUTCOME_URL_NAME, required = false) String serviceUrl,
+                        HttpSession session,
                         Map<String, Object> model) {
 
         // вся обработка в режиме отладки эквивалентна продакшн режиму
@@ -32,6 +40,7 @@ public class Lab {
                 "1",
                 sourcedId == null ? "DEBUG_ID" : sourcedId,
                 serviceUrl == null ? "DEBUG_URL" : serviceUrl,
+                session,
                 model
         );
     }
@@ -46,12 +55,16 @@ public class Lab {
     @Lti
     @PostMapping("/api/rest/lti/{labId}")
     public String doPost(@PathVariable("labId") String labId,
-                         @RequestParam(name="lis_result_sourcedid") String sourcedId,
-                         @RequestParam(name="lis_outcome_service_url") String serviceUrl,
+                         @RequestParam(name=LIS_SOURCED_ID_NAME) String sourcedId,
+                         @RequestParam(name=LIS_OUTCOME_URL_NAME) String serviceUrl,
+                         HttpSession session,
                          Map<String, Object> model) {
 
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", String.valueOf(rnd.nextInt(4)) );
+
+
+        checkLisParams(sourcedId, serviceUrl, session);
 
         SqlQueryForm queryForm = new SqlQueryForm();
         model.put("query", queryForm);
@@ -63,8 +76,6 @@ public class Lab {
     @Lti
     @PostMapping("/api/rest/lti/{labId}/result")
     public String doResult( @PathVariable("labId") String labId,
-                            @RequestParam(name="lis_result_sourcedid", required = false) String sourcedId,
-                            @RequestParam(name="lis_outcome_service_url", required = false) String serviceUrl,
                             HttpServletRequest request,
                             Map<String, Object> model,
                             @ModelAttribute SqlQueryForm queryForm) {
@@ -93,6 +104,17 @@ public class Lab {
         }
 
         return "result";
+    }
+
+    public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session) {
+        String sessionSourcedId = (String) session.getAttribute(LIS_SOURCED_ID_NAME);
+        String sessionOutcomeUrl = (String) session.getAttribute(LIS_OUTCOME_URL_NAME);
+        if(sourcedId != null && !sourcedId.equals(sessionSourcedId)) {
+            session.setAttribute(LIS_SOURCED_ID_NAME, sourcedId);
+        }
+        if(outcomeUrl != null && !outcomeUrl.equals(sessionOutcomeUrl)) {
+            session.setAttribute(LIS_OUTCOME_URL_NAME, outcomeUrl);
+        }
     }
 
     private static Random rnd = new Random();
