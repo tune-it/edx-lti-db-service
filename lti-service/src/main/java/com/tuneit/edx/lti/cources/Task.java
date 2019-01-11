@@ -1,17 +1,19 @@
 package com.tuneit.edx.lti.cources;
 
-import java.util.Random;
-
 public interface Task {
 
     String getQuestion();
+    void setQuestion(String arg);
 
-    default long getId() {
-        return System.nanoTime();
-    }
+    long getId();
 
-    default boolean isDone() {
-        return new Random().nextBoolean();
-    }
+    boolean isComplete();
+    void setComplete(boolean completeFlag);
+
+    String getAnswer();
+    void setAnswer(String arg);
+
+    float getRating();
+    void setRating(float rating);
 
 }

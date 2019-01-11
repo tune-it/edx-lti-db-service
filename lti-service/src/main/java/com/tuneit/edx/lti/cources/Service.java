@@ -12,4 +12,10 @@ public interface Service {
      */
     Task[] getTasks(String labId, int complexity);
 
+    /**
+     * @param tasks list of tasks for validation
+     * @return array of validated tasks
+     */
+    Task[] checkTasks(Task ... tasks);
+
 }
