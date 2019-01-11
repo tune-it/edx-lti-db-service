@@ -96,6 +96,9 @@ public class Lab {
         model.put("numberOfLab", labId );
 
         try {
+            String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME);
+            String sourcedId = (String) request.getSession().getAttribute(LIS_SOURCED_ID_NAME);
+
             System.out.println("Push score to URL: " + serviceUrl);
             int result = Score.push(sourcedId, serviceUrl);
             System.out.println("RETURN CODE = " + result);

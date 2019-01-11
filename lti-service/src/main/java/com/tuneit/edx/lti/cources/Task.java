@@ -1,19 +1,50 @@
 package com.tuneit.edx.lti.cources;
 
-public interface Task {
+public class Task {
 
-    String getQuestion();
-    void setQuestion(String arg);
+    private String  id; // yearOfStudy + studentId + labId + ...
+    private String  question;
+    private boolean isComplete;
+    private String  answer;
+    private float   rating;
 
-    long getId();
+    public String getId() {
+        return id;
+    }
 
-    boolean isComplete();
-    void setComplete(boolean completeFlag);
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    String getAnswer();
-    void setAnswer(String arg);
+    public String getQuestion() {
+        return question;
+    }
 
-    float getRating();
-    void setRating(float rating);
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 }
