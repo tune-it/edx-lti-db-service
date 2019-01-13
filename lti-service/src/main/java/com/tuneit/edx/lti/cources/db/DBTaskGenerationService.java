@@ -1,9 +1,12 @@
-package com.tuneit.edx.lti.cources.example;
+package com.tuneit.edx.lti.cources.db;
 
 import com.tuneit.edx.lti.cources.Service;
 import com.tuneit.edx.lti.cources.Task;
 
-public class ExampleService implements Service {
+/**
+ * STUB need implements
+ */
+public class DBTaskGenerationService implements Service {
 
     @Override
     public Task[] getTasks(String studentId, String labId, int complexity) {

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema>
+    <connection>
+        <uri>jdbc:postgresql://localhost/demo</uri>
+        <username>airdemo</username>
+        <password>demo</password>
+    </connection>
+    <tables>
+        <table sqlName="aircrafts" name="воздушные судна">
+            <column sqlName="aircraft_code" name=""/>
+            <column sqlName="model" name=""/>
+            <column sqlName="range" name=""/>
+        </table>
+        <table sqlName="airports" name="аэропорты">
+            <column sqlName="airport_code" name=""/>
+            <column sqlName="airport_name" name=""/>
+            <column sqlName="city" name=""/>
+            <column sqlName="coordinates" name=""/>
+            <column sqlName="timezone" name=""/>
+        </table>
+        <table sqlName="boarding_passes" name="посадочный талон">
+            <column sqlName="ticket_no" name=""/>
+            <column sqlName="flight_id" name=""/>
+            <column sqlName="boarding_no" name=""/>
+            <column sqlName="seat_no" name=""/>
+        </table>
+        <table sqlName="bookings" name="бронирование">
+            <column sqlName="book_ref" name=""/>
+            <column sqlName="book_date" name=""/>
+            <column sqlName="total_amount" name=""/>
+        </table>    
+        <table sqlName="flights" name="полет воздушного судна">
+            <column sqlName="flight_id" name=""/>
+            <column sqlName="flight_no" name=""/>
+            <column sqlName="scheduled_departure" name=""/>
+            <column sqlName="scheduled_arrival" name=""/>
+            <column sqlName="departure_airport" name=""/>
+            <column sqlName="arrival_airport" name=""/>
+            <column sqlName="status" name=""/>
+            <column sqlName="aircraft_code" name=""/>
+            <column sqlName="actual_departure" name=""/>
+            <column sqlName="actual_arrival" name=""/>
+        </table> 
+        <table sqlName="seats" name="посадочное место">
+            <column sqlName="aircraft_code" name=""/>
+            <column sqlName="seat_no" name=""/>
+            <column sqlName="fare_conditions" name=""/>
+        </table>
+        <table sqlName="ticket_flights" name="полеты по билету">
+            <column sqlName="ticket_no" name=""/>
+            <column sqlName="flight_id" name=""/>
+            <column sqlName="fare_conditions" name=""/>
+            <column sqlName="amount" name=""/>
+        </table> 
+        <table sqlName="tickets" name="проданный билет">
+            <column sqlName="ticket_no" name=""/>
+            <column sqlName="book_ref" name=""/>
+            <column sqlName="passenger_id" name=""/>
+            <column sqlName="passenger_name" name=""/>
+            <column sqlName="contact_data" name=""/>
+        </table>       
+    </tables>
+    <labs-config>
+        <lab></lab>
+    </labs-config>
+</schema>
