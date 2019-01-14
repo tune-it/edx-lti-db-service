@@ -11,7 +11,7 @@ public interface Service {
      * @param complexity count of questions
      * @return array of tasks
      */
-    Task[] getTasks(String studentId, String labId, int complexity);
+    Task[] getTasks(String studentId, String labId, String variant, int complexity);
 
     /**
      * @param tasks list of tasks for validation

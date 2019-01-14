@@ -9,11 +9,11 @@ import com.tuneit.edx.lti.cources.Task;
 public class DBTaskGenerationService implements Service {
 
     @Override
-    public Task[] getTasks(String studentId, String labId, int complexity) {
+    public Task[] getTasks(String studentId, String labId, String variant, int complexity) {
         Task[] tasks = new Task[complexity];
         for(int i = 0; i < complexity; ++i) {
             Task t = tasks[i];
-            t.setStudentId(studentId).setLabId(labId);
+            t.setStudentId(studentId).setLabId(labId).setVariant(variant);
             //t.setId(studentId + labId + System.nanoTime());
         }
         return tasks;

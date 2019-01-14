@@ -17,33 +17,33 @@
 
     <div ng-cloak="" flex class="query-container">
         <md-content layout-padding="">
-            <h2>Введите запросы, для получения следующих данных:</h2>
+            <h2>Введите запросы для получения следующих данных:</h2>
             <form method="post" th:object="${query}" th:action="@{'/api/rest/lti/' + ${numberOfLab} + '/result'}">
 
                 <md-input-container class="md-block">
-                    <label>Выдать содержимое всех столбцов таблицы Н_ТИПЫ_ПЛАНОВ</label>
+                    <label th:text="${task1}"></label>
                     <textarea th:field="*{textQuery}" md-select-on-focus>
                         <pre><code class="sql"></code></pre>
                     </textarea>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label>Вывести сокращенные названия видов работ в процессе обучения</label>
+                    <label th:text="${task2}"></label>
                     <textarea th:field="*{textQuery2}" md-select-on-focus></textarea>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label>Вывести только уникальные перечень квалификаций, присваиваемых выпускникам нашего университета</label>
+                    <label th:text="${task3}"></label>
                     <textarea th:field="*{textQuery3}" md-select-on-focus></textarea>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label>Выдать содержимое столбца(ов) `аббревиатура`, наименование для таблицы Н_ЦИКЛЫ_ДИСЦИПЛИН</label>
+                    <label th:text="${task4}"></label>
                     <textarea th:field="*{textQuery4}" md-select-on-focus></textarea>
                 </md-input-container>
 
                 <md-input-container class="md-block">
-                    <label>Вывести в один столбец текст, содержащий фамилию и г/р людей в формате 'Пароль: Петров99'</label>
+                    <label th:text="${task5}"></label>
                     <textarea th:field="*{textQuery5}" md-select-on-focus></textarea>
                 </md-input-container>
 

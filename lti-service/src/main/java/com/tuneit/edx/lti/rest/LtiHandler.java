@@ -1,6 +1,9 @@
 package com.tuneit.edx.lti.rest;
 
 import com.tuneit.edx.lti.config.WebConfig;
+import com.tuneit.edx.lti.cources.Service;
+import com.tuneit.edx.lti.cources.ServiceFactory;
+import com.tuneit.edx.lti.cources.Task;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
 import org.imsglobal.aspect.Lti;
@@ -31,7 +34,18 @@ public class LtiHandler {
     public String doGet(@RequestParam(name=LIS_SOURCED_ID_NAME, required = false) String sourcedId,
                         @RequestParam(name=LIS_OUTCOME_URL_NAME, required = false) String serviceUrl,
                         HttpSession session,
+                        HttpServletRequest request,
                         Map<String, Object> model) {
+
+        // TODO needs move to debug filter
+        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
+        if(userInfo == null) {
+            EdxUserInfo tmpUser = new EdxUserInfo();
+            tmpUser.setUsername("DEBUG_USER");
+            tmpUser.setVersion(1);
+            tmpUser.setHeaderUrls(null);
+            request.setAttribute(WebConfig.ATTRIBUTE_USER_INFO, tmpUser);
+        }
 
         // вся обработка в режиме отладки эквивалентна продакшн режиму
         return doPost (
@@ -39,6 +53,7 @@ public class LtiHandler {
                 sourcedId == null ? "DEBUG_ID" : sourcedId,
                 serviceUrl == null ? "DEBUG_URL" : serviceUrl,
                 session,
+                request,
                 model
         );
     }
@@ -56,10 +71,24 @@ public class LtiHandler {
                          @RequestParam(name=LIS_SOURCED_ID_NAME) String sourcedId,
                          @RequestParam(name=LIS_OUTCOME_URL_NAME) String serviceUrl,
                          HttpSession session,
+                         HttpServletRequest request,
                          Map<String, Object> model) {
+
+        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
 
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId );
+
+        Service dataStore = ServiceFactory.getExampleService(); // TODO change to getDataStoreService()
+        Task[] tasks = dataStore.getTasks(userInfo.getUsername(), labId, session.getId(), 5);// TODO 5 - temporary hardcode
+        model.put("task1", tasks[0].getQuestion());
+        model.put("task2", tasks[1].getQuestion());
+        model.put("task3", tasks[2].getQuestion());
+        model.put("task4", tasks[3].getQuestion());
+        model.put("task5", tasks[4].getQuestion());
+
+        session.setAttribute("tasks", tasks);
+
 
         checkLisParams(sourcedId, serviceUrl, session);
 
@@ -86,13 +115,32 @@ public class LtiHandler {
 
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("username", username);
-        model.put("rating", 80);
         model.put("numberOfLab", labId );
         model.put("queryText", queryForm.getTextQuery());
         model.put("queryText2", queryForm.getTextQuery2());
         model.put("queryText3", queryForm.getTextQuery3());
         model.put("queryText4", queryForm.getTextQuery4());
         model.put("queryText5", queryForm.getTextQuery5());
+
+        Task[] tasks = (Task[]) request.getSession().getAttribute("tasks");
+        tasks[0].setAnswer(queryForm.getTextQuery());
+        tasks[1].setAnswer(queryForm.getTextQuery2());
+        tasks[2].setAnswer(queryForm.getTextQuery3());
+        tasks[3].setAnswer(queryForm.getTextQuery4());
+        tasks[4].setAnswer(queryForm.getTextQuery5());
+        for(Task t : tasks) {
+            t.setComplete( !(t.getAnswer() == null || t.getAnswer().isEmpty()) );
+        }
+
+        Service dataStore = ServiceFactory.getExampleService(); // TODO change to getDataStoreService()
+        dataStore.checkTasks(tasks);
+
+        float x = 0;
+        for(Task t : tasks) {
+            x += t.getRating();
+        }
+
+        model.put("rating", String.format("%.2f", x * 100 / 5) + "%");
 
         try {
             String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME);
