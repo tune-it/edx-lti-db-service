@@ -15,15 +15,39 @@
         </div>
     </md-toolbar>
 
-    <div ng-cloak="" flex>
+    <div ng-cloak="" flex class="query-container">
         <md-content layout-padding="">
-            <form class="sql-form" method="post" th:object="${query}" th:action="@{'/api/rest/lti/' + ${numberOfLab} + '/result'}">
+            <h2>Введите запросы, для получения следующих данных:</h2>
+            <form method="post" th:object="${query}" th:action="@{'/api/rest/lti/' + ${numberOfLab} + '/result'}">
 
-                <mat-form-field class="input-full-width">
-                    <textarea matInput placeholder="SQL код" th:field="*{textQuery}"></textarea>
-                </mat-form-field>
+                <md-input-container class="md-block">
+                    <label>Выдать содержимое всех столбцов таблицы Н_ТИПЫ_ПЛАНОВ</label>
+                    <textarea th:field="*{textQuery}" md-select-on-focus>
+                        <pre><code class="sql"></code></pre>
+                    </textarea>
+                </md-input-container>
 
-                <md-button type="submit">Отправить</md-button>
+                <md-input-container class="md-block">
+                    <label>Вывести сокращенные названия видов работ в процессе обучения</label>
+                    <textarea th:field="*{textQuery2}" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Вывести только уникальные перечень квалификаций, присваиваемых выпускникам нашего университета</label>
+                    <textarea th:field="*{textQuery3}" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Выдать содержимое столбца(ов) `аббревиатура`, наименование для таблицы Н_ЦИКЛЫ_ДИСЦИПЛИН</label>
+                    <textarea th:field="*{textQuery4}" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Вывести в один столбец текст, содержащий фамилию и г/р людей в формате 'Пароль: Петров99'</label>
+                    <textarea th:field="*{textQuery5}" md-select-on-focus></textarea>
+                </md-input-container>
+
+                <md-button class="md-raised md-primary" type="submit">Отправить</md-button>
 
             </form>
         </md-content>

@@ -2,6 +2,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/highlight/darcula.css">
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
 </head>
@@ -18,7 +19,14 @@
 <div ng-cloak="" flex>
     <md-content layout-padding="">
         <div>Обработан результат студента <span th:text="${username}"></span></div>
-        <md-button>Назад к заданию (STUB)</md-button>
+        <div>Верных ответов:<span th:text="${rating}"></span></div>
+
+        <pre><code class="sql" th:text="${queryText}"></code></pre>
+        <pre><code class="sql" th:text="${queryText2}"></code></pre>
+        <pre><code class="sql" th:text="${queryText3}"></code></pre>
+        <pre><code class="sql" th:text="${queryText4}"></code></pre>
+        <pre><code class="sql" th:text="${queryText5}"></code></pre>
+
     </md-content>
 </div>
 
@@ -33,6 +41,10 @@
 
 <!-- Your application bootstrap  -->
 <script src="/assets/js/edx.js"></script>
+
+<!-- Highlight SQL code -->
+<script src="/assets/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 </body>
 </html>

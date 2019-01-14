@@ -29,6 +29,6 @@ public class ExampleService implements Service {
     }
 
     private boolean checkTask(String answer) {
-        return "привет матери мамонтенка".equalsIgnoreCase(answer);
+        return "заглушка".equalsIgnoreCase(answer);
     }
 }

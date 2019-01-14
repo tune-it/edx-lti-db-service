@@ -10,7 +10,7 @@ public interface ScoreRestAPI {
     @POST("{fullUrl}")
     Call<Void> post(
         @Path(value = "fullUrl", encoded = true) String outcomeServiceUrl,
-        @Body            String body
+        @Body                                    String body
     );
 
 }
