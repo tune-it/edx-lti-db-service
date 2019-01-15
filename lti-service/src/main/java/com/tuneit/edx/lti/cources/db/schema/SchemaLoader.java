@@ -35,17 +35,9 @@ public class SchemaLoader {
     
     // TODO - should refactor this -- need more dependency
     public static Schema getSchema(String yearOfStudy, String studentId) {
-        long seed = 2928;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(yearOfStudy.toUpperCase().getBytes());
-            md.update(studentId.toUpperCase().getBytes());
-            String md5 = DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
-            seed = Long.parseUnsignedLong(md5, 16);
-            
-        } catch (NoSuchAlgorithmException|NumberFormatException ex) {
-            Logger.getLogger(SchemaLoader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (yearOfStudy==null || studentId==null)
+            throw new IllegalArgumentException("Cant get Schema for student and year of study. Null args.");
+        int seed = (yearOfStudy+"-"+studentId).toUpperCase().hashCode();
         int schemaNo = (new Random(seed)).nextInt(schemas.size());
         return SchemaLoader.getSchema(schemaNo);
     }
@@ -66,3 +58,17 @@ public class SchemaLoader {
     }
 
 }
+
+// old style seed int getSchema generation. hashCode is much more simply
+// keep it hear for posibility to use in future
+//        long seed = 2928;
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("MD5");
+//            md.update(yearOfStudy.toUpperCase().getBytes());
+//            md.update(studentId.toUpperCase().getBytes());
+//            String md5 = DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
+//            seed = Long.parseUnsignedLong(md5.substring(0, 16), 16);
+//            
+//        } catch (NoSuchAlgorithmException|NumberFormatException ex) {
+//            Logger.getLogger(SchemaLoader.class.getName()).log(Level.SEVERE, null, ex);
+//        }

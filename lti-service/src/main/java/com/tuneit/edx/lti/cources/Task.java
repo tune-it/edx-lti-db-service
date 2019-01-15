@@ -25,7 +25,7 @@ public class Task {
             if (getYearOfStudy()==null||studentId==null||
                     labId==null||taskId==null||variant==null) {
                 //TODO maybe set up fake or defaults instead of exception
-                throw new RuntimeException("Task id could not be generated. Please fill required fields in Task");
+                throw new RuntimeException("Task ID could not be generated. Please fill required fields in Task");
             }
             id = yearOfStudy + "-" + studentId + ":" + 
                  labId + "-" + taskId +"-" + variant; 
@@ -157,4 +157,14 @@ public class Task {
         this.rating = rating;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" + "id=" + id + ", yearOfStudy=" + yearOfStudy + 
+               ", studentId=" + studentId + ", labId=" + labId + 
+               ", taskId=" + taskId + ", variant=" + variant + ", question=" + question + 
+               ", isComplete=" + isComplete + ", answer=" + answer + ", rating=" + rating + '}';
+    }
+    
+
 }

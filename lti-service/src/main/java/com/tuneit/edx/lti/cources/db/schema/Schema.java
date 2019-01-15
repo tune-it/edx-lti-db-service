@@ -1,6 +1,7 @@
 package com.tuneit.edx.lti.cources.db.schema;
 
 import com.tuneit.edx.lti.cources.db.Lab;
+import com.tuneit.edx.lti.cources.db.Lab02;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,6 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="schema")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Schema {
+    
+    @XmlAttribute(name="name")
+    private String name;
 
     @XmlElement(name="connection")
     private SchemaConnection connection;
@@ -35,8 +40,11 @@ public class Schema {
     private List<Table> tables;
     
     @XmlElementWrapper(name="labs-config")
-    @XmlElement(name="lab")
-    private List<Lab> task;
+    @XmlElements({
+            @XmlElement(name = "lab02", type = Lab02.class),
+
+    })
+    private List<Lab> labs;
 
     
     public static Schema load(String schemaName) {
@@ -66,6 +74,14 @@ public class Schema {
         return connection.getConnection();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     /**
      * @return the tables
      */
@@ -78,6 +94,14 @@ public class Schema {
      */
     public void setTables(List<Table> tables) {
         this.tables = tables;
+    }
+
+    public List<Lab> getLabs() {
+        return labs;
+    }
+
+    public void setLabs(List<Lab> labs) {
+        this.labs = labs;
     }
     
     

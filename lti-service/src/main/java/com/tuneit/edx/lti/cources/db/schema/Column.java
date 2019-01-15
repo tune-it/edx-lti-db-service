@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Column {
     
-    @XmlAttribute(name="sqlName") private String sqlName;
+    @XmlAttribute(name="sql-name") private String sqlName;
     @XmlAttribute(name="name") private String name;
 
     @Override

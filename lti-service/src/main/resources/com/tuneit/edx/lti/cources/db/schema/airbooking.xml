@@ -1,67 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<schema>
+<schema name="Airbookings">
     <connection>
         <uri>jdbc:postgresql://localhost/demo</uri>
         <username>airdemo</username>
         <password>demo</password>
     </connection>
     <tables>
-        <table sqlName="aircrafts" name="воздушные судна">
-            <column sqlName="aircraft_code" name=""/>
-            <column sqlName="model" name=""/>
-            <column sqlName="range" name=""/>
+        <table sql-name="aircrafts" name="воздушные судна">
+            <column sql-name="aircraft_code" name=""/>
+            <column sql-name="model" name=""/>
+            <column sql-name="range" name=""/>
         </table>
-        <table sqlName="airports" name="аэропорты">
-            <column sqlName="airport_code" name=""/>
-            <column sqlName="airport_name" name=""/>
-            <column sqlName="city" name=""/>
-            <column sqlName="coordinates" name=""/>
-            <column sqlName="timezone" name=""/>
+        <table sql-name="airports" name="аэропорты">
+            <column sql-name="airport_code" name=""/>
+            <column sql-name="airport_name" name=""/>
+            <column sql-name="city" name=""/>
+            <column sql-name="coordinates" name=""/>
+            <column sql-name="timezone" name=""/>
         </table>
-        <table sqlName="boarding_passes" name="посадочный талон">
-            <column sqlName="ticket_no" name=""/>
-            <column sqlName="flight_id" name=""/>
-            <column sqlName="boarding_no" name=""/>
-            <column sqlName="seat_no" name=""/>
+        <table sql-name="boarding_passes" name="посадочный талон">
+            <column sql-name="ticket_no" name=""/>
+            <column sql-name="flight_id" name=""/>
+            <column sql-name="boarding_no" name=""/>
+            <column sql-name="seat_no" name=""/>
         </table>
-        <table sqlName="bookings" name="бронирование">
-            <column sqlName="book_ref" name=""/>
-            <column sqlName="book_date" name=""/>
-            <column sqlName="total_amount" name=""/>
+        <table sql-name="bookings" name="бронирование">
+            <column sql-name="book_ref" name=""/>
+            <column sql-name="book_date" name=""/>
+            <column sql-name="total_amount" name=""/>
         </table>    
-        <table sqlName="flights" name="полет воздушного судна">
-            <column sqlName="flight_id" name=""/>
-            <column sqlName="flight_no" name=""/>
-            <column sqlName="scheduled_departure" name=""/>
-            <column sqlName="scheduled_arrival" name=""/>
-            <column sqlName="departure_airport" name=""/>
-            <column sqlName="arrival_airport" name=""/>
-            <column sqlName="status" name=""/>
-            <column sqlName="aircraft_code" name=""/>
-            <column sqlName="actual_departure" name=""/>
-            <column sqlName="actual_arrival" name=""/>
+        <table sql-name="flights" name="полет воздушного судна">
+            <column sql-name="flight_id" name=""/>
+            <column sql-name="flight_no" name=""/>
+            <column sql-name="scheduled_departure" name=""/>
+            <column sql-name="scheduled_arrival" name=""/>
+            <column sql-name="departure_airport" name=""/>
+            <column sql-name="arrival_airport" name=""/>
+            <column sql-name="status" name=""/>
+            <column sql-name="aircraft_code" name=""/>
+            <column sql-name="actual_departure" name=""/>
+            <column sql-name="actual_arrival" name=""/>
         </table> 
-        <table sqlName="seats" name="посадочное место">
-            <column sqlName="aircraft_code" name=""/>
-            <column sqlName="seat_no" name=""/>
-            <column sqlName="fare_conditions" name=""/>
+        <table sql-name="seats" name="посадочное место">
+            <column sql-name="aircraft_code" name=""/>
+            <column sql-name="seat_no" name=""/>
+            <column sql-name="fare_conditions" name=""/>
         </table>
-        <table sqlName="ticket_flights" name="полеты по билету">
-            <column sqlName="ticket_no" name=""/>
-            <column sqlName="flight_id" name=""/>
-            <column sqlName="fare_conditions" name=""/>
-            <column sqlName="amount" name=""/>
+        <table sql-name="ticket_flights" name="полеты по билету">
+            <column sql-name="ticket_no" name=""/>
+            <column sql-name="flight_id" name=""/>
+            <column sql-name="fare_conditions" name=""/>
+            <column sql-name="amount" name=""/>
         </table> 
-        <table sqlName="tickets" name="проданный билет">
-            <column sqlName="ticket_no" name=""/>
-            <column sqlName="book_ref" name=""/>
-            <column sqlName="passenger_id" name=""/>
-            <column sqlName="passenger_name" name=""/>
-            <column sqlName="contact_data" name=""/>
+        <table sql-name="tickets" name="проданный билет">
+            <column sql-name="ticket_no" name=""/>
+            <column sql-name="book_ref" name=""/>
+            <column sql-name="passenger_id" name=""/>
+            <column sql-name="passenger_name" name=""/>
+            <column sql-name="contact_data" name=""/>
         </table>       
     </tables>
     <labs-config>
-        <lab></lab>
+        <lab02 id="lab02" description="простая выборка из таблицы">
+            <task01 id="task01" description="none">
+                <prolog>Выведите содержимое всех столбцов таблицы </prolog>
+                <epilog>.</epilog>
+                <!-- <forbiden-table>ticket_flights</forbiden-table> -->
+            </task01>
+            <task02 id="task02" description="none">
+                <prolog>Выведите содержимое столбца(столбцов) </prolog>
+                <epilog> для таблицы </epilog>
+                <!-- <forbiden-table>ticket_flights</forbiden-table> -->
+            </task02>
+        </lab02>
     </labs-config>
 </schema>

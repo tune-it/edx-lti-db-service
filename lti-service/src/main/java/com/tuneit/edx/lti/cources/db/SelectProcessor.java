@@ -1,5 +1,6 @@
 package com.tuneit.edx.lti.cources.db;
 
+import com.tuneit.edx.lti.cources.Task;
 import com.tuneit.edx.lti.cources.db.schema.Schema;
 import com.tuneit.edx.lti.cources.db.schema.SchemaLoader;
 import com.tuneit.edx.lti.cources.db.schema.Table;
@@ -20,19 +21,30 @@ import javax.xml.bind.DatatypeConverter;
  *
  * @author serge
  */
-public class SelectTester {
+public class SelectProcessor {
 
 
     
     public static void main(String[] args) throws Exception {
-        SelectTester st = new SelectTester();
+        SelectProcessor st = new SelectProcessor();
         Schema s = SchemaLoader.getSchema(0);
-        for (Table t : s.getTables()) {
+        for (Lab t : s.getLabs()) {
             System.out.println(t);
         }
-        StringBuilder sb = new StringBuilder();
-        System.out.println("query md5 = "+st.execute_select(s,"select * from airports", -1, sb));
-        System.out.println(sb);
+        DBTaskGenerationService ds = new DBTaskGenerationService();
+        Task tasks[] = ds.getTasks("serge@cs.ifmo.ru", "lab02", "00", 0);
+        tasks[0].setAnswer("select * from ticket_flights;").setComplete(true);
+        tasks[1].setAnswer("select timezone, airport_code, city, airport_name from airports;").setComplete(true);
+        ds.checkTasks(tasks);
+        for (Task t : tasks) {
+            System.out.println(t);
+        }
+        //for (Table t : s.getTables()) {
+        //    System.out.println(t);
+        //}
+        //StringBuilder sb = new StringBuilder();
+        //System.out.println("query md5 = "+st.execute_select(s,"select * from airports", -1, sb));
+        //System.out.println(sb);
     }
     
     //private static ResultsHashStore results = new ResultsHashStore();;
@@ -118,9 +130,9 @@ public class SelectTester {
             
         } catch(SQLException e) {
             query_exception = e;
-            //Logger.getLogger(SelectTester.class.getName()).log(Level.SEVERE, null, e);
+            //Logger.getLogger(SelectProcessor.class.getName()).log(Level.SEVERE, null, e);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(SelectTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectProcessor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try { if (rset != null) rset.close(); } catch(Exception e) { }
             try { if (stmt != null) stmt.close(); } catch(Exception e) { }

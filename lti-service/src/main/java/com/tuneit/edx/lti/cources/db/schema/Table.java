@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Table {
     
-    @XmlAttribute(name="sqlName") private String sqlName;
+    @XmlAttribute(name="sql-name") private String sqlName;
     @XmlAttribute(name="name") private String name;
     
     @XmlElement(name="column")
