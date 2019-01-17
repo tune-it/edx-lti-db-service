@@ -4,11 +4,13 @@ import com.tuneit.edx.lti.cources.Service;
 import com.tuneit.edx.lti.cources.Task;
 import com.tuneit.edx.lti.cources.db.schema.Schema;
 import com.tuneit.edx.lti.cources.db.schema.SchemaLoader;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
-/**
- * STUB need implements
- */
+@Component
+@Profile("prod")
 public class DBTaskGenerationService implements Service {
 
     @Override

@@ -2,18 +2,17 @@ package com.tuneit.edx.lti.rest;
 
 import com.tuneit.edx.lti.config.WebConfig;
 import com.tuneit.edx.lti.cources.Service;
-import com.tuneit.edx.lti.cources.ServiceFactory;
 import com.tuneit.edx.lti.cources.Task;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
 import org.imsglobal.aspect.Lti;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
-import java.util.Random;
 
 @Controller
 public class LtiHandler {
@@ -21,6 +20,9 @@ public class LtiHandler {
     public static final String LIS_SOURCED_ID_NAME  = "lis_result_sourcedid";
 
     public static final String LIS_OUTCOME_URL_NAME = "lis_outcome_service_url";
+
+    @Autowired
+    private Service service;
 
     /**
      * Метод для отладки (для dev режима). Используется
@@ -58,8 +60,6 @@ public class LtiHandler {
         );
     }
 
-    private static Service dataStore = ServiceFactory.getDataSourceService();
-
     /**
      * Обработчик запросов к LTI-сервису
      *
@@ -81,12 +81,9 @@ public class LtiHandler {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId );
 
-        Task[] tasks = dataStore.getTasks(userInfo.getUsername(), labId, "00", 0);// TODO 5 - temporary hardcode
+        Task[] tasks = service.getTasks(userInfo.getUsername(), labId, String.valueOf(variant++), 0);// TODO temporary hardcode
         model.put("task1", tasks[0].getQuestion());
         model.put("task2", tasks[1].getQuestion());
-        // model.put("task3", tasks[2].getQuestion());
-        // model.put("task4", tasks[3].getQuestion());
-        // model.put("task5", tasks[4].getQuestion());
 
         session.setAttribute("tasks", tasks);
 
@@ -99,6 +96,8 @@ public class LtiHandler {
         /**  передаем управление движку themyleaf (см. classpath:/templates/index.html)  */
         return "index";
     }
+
+    private static int variant = 0;
 
     @Lti
     @PostMapping("/api/rest/lti/{labId}/result")
@@ -121,14 +120,11 @@ public class LtiHandler {
         Task[] tasks = (Task[]) request.getSession().getAttribute("tasks");
         tasks[0].setAnswer(queryForm.getTextQuery());
         tasks[1].setAnswer(queryForm.getTextQuery2());
-        // tasks[2].setAnswer(queryForm.getTextQuery3());
-        // tasks[3].setAnswer(queryForm.getTextQuery4());
-        // tasks[4].setAnswer(queryForm.getTextQuery5());
         for(Task t : tasks) {
             t.setComplete( !(t.getAnswer() == null || t.getAnswer().isEmpty()) );
         }
 
-        dataStore.checkTasks(tasks);
+        service.checkTasks(tasks);
 
         model.put("queryText",  getSQLStringWithComments(tasks[0]) );
         model.put("queryText2", getSQLStringWithComments(tasks[1]) );
@@ -156,6 +152,7 @@ public class LtiHandler {
         return "result";
     }
 
+    // TODO move to Task.class or some TaskUtil
     private String getSQLStringWithComments(Task task) {
         return new StringBuilder()
             .append("# \n# ")
@@ -177,6 +174,4 @@ public class LtiHandler {
             session.setAttribute(LIS_OUTCOME_URL_NAME, outcomeUrl);
         }
     }
-
-    private static Random rnd = new Random();
 }

@@ -2,9 +2,13 @@ package com.tuneit.edx.lti.cources.example;
 
 import com.tuneit.edx.lti.cources.Service;
 import com.tuneit.edx.lti.cources.Task;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+@Component
+@Profile("dev")
 public class ExampleService implements Service {
 
     @Override
@@ -24,8 +28,8 @@ public class ExampleService implements Service {
                 "Вычислить возраст человека в годах"
         };
 
-        Task[] tasks = new Task[complexity];
-        for(int i = 0; i < complexity; ++i) {
+        Task[] tasks = new Task[2];
+        for(int i = 0; i < 2; ++i) {
             tasks[i] = new Task();
             Task t = tasks[i];
             t.setStudentId(studentId).setLabId(labId).setVariant(variant);
