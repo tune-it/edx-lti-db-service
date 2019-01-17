@@ -9,7 +9,7 @@
     <md-toolbar class="md-primary">
         <div layout="row" layout-padding layout-align="space-between center">
             <div class="md-toolbar-tools">
-                <h2 class="md-flex">Лабораторная работа №<span th:text="${numberOfLab}"></span></h2>
+                <h2 class="md-flex">Лабораторная работа "<span th:text="${numberOfLab}"></span>"</h2>
             </div>
             <span style="flex: 1 1 auto;" />
         </div>
@@ -32,6 +32,7 @@
                     <textarea th:field="*{textQuery2}" md-select-on-focus></textarea>
                 </md-input-container>
 
+                <!--
                 <md-input-container class="md-block">
                     <label th:text="${task3}"></label>
                     <textarea th:field="*{textQuery3}" md-select-on-focus></textarea>
@@ -46,6 +47,7 @@
                     <label th:text="${task5}"></label>
                     <textarea th:field="*{textQuery5}" md-select-on-focus></textarea>
                 </md-input-container>
+                -->
 
                 <md-button class="md-raised md-primary" type="submit">Отправить</md-button>
 

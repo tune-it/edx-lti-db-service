@@ -74,14 +74,19 @@ public class DBTaskGenerationService implements Service {
                           +t.getLabId()+" and task "+t.getTaskId()+" in schema "+s.getName());
             }
             if(t.isComplete()) {
-                //TODO check persistent store of question and answers to avoid excessive generation
-                //based on t.getId();
-                LabTaskQA ltqa = ctask.generate(s, t);
-                SelectProcessor tester = new SelectProcessor();
-                String answer_md5 = tester.execute_select(s, t.getAnswer(), 5, null);
-                String correct_md5 = tester.execute_select(s, ltqa.getCorrectAnswer(), 5, null);
-                t.setRating(answer_md5.equalsIgnoreCase(correct_md5) ? 1.0f : 0.0f );
-                //TODO Check SQL correctness via AST or StringTokenizer
+                try {
+                    //TODO check persistent store of question and answers to avoid excessive generation
+                    //based on t.getId();
+                    LabTaskQA ltqa = ctask.generate(s, t);
+                    SelectProcessor tester = new SelectProcessor();
+                    String answer_md5 = tester.execute_select(s, t.getAnswer(), 5, null);
+                    String correct_md5 = tester.execute_select(s, ltqa.getCorrectAnswer(), 5, null);
+                    t.setRating(answer_md5.equalsIgnoreCase(correct_md5) ? 1.0f : 0.0f);
+                    //TODO Check SQL correctness via AST or StringTokenizer
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    t.setRating(0.0f);
+                }
             }
 
         }

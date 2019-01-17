@@ -2,7 +2,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/highlight/darcula.css">
+    <link rel="stylesheet" href="/assets/css/highlight/github.css">
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
 </head>
@@ -10,7 +10,7 @@
 <md-toolbar class="md-primary">
     <div layout="row" layout-padding layout-align="space-between center">
         <div class="md-toolbar-tools">
-            <h2 class="md-flex">Лабораторная работа №<span th:text="${numberOfLab}"></span></h2>
+            <h2 class="md-flex">Лабораторная работа "<span th:text="${numberOfLab}"></span>"</h2>
         </div>
         <span style="flex: 1 1 auto;" />
     </div>
@@ -23,9 +23,12 @@
 
         <pre><code class="sql" th:text="${queryText}"></code></pre>
         <pre><code class="sql" th:text="${queryText2}"></code></pre>
-        <pre><code class="sql" th:text="${queryText3}"></code></pre>
-        <pre><code class="sql" th:text="${queryText4}"></code></pre>
-        <pre><code class="sql" th:text="${queryText5}"></code></pre>
+
+        <!--
+            <pre><code class="sql" th:text="${queryText3}"></code></pre>
+            <pre><code class="sql" th:text="${queryText4}"></code></pre>
+            <pre><code class="sql" th:text="${queryText5}"></code></pre>
+        -->
 
     </md-content>
 </div>

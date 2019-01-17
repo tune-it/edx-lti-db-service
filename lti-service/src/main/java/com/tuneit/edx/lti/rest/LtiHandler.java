@@ -58,6 +58,8 @@ public class LtiHandler {
         );
     }
 
+    private static Service dataStore = ServiceFactory.getDataSourceService();
+
     /**
      * Обработчик запросов к LTI-сервису
      *
@@ -79,13 +81,12 @@ public class LtiHandler {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId );
 
-        Service dataStore = ServiceFactory.getExampleService(); // TODO change to getDataStoreService()
-        Task[] tasks = dataStore.getTasks(userInfo.getUsername(), labId, session.getId(), 5);// TODO 5 - temporary hardcode
+        Task[] tasks = dataStore.getTasks(userInfo.getUsername(), labId, "00", 0);// TODO 5 - temporary hardcode
         model.put("task1", tasks[0].getQuestion());
         model.put("task2", tasks[1].getQuestion());
-        model.put("task3", tasks[2].getQuestion());
-        model.put("task4", tasks[3].getQuestion());
-        model.put("task5", tasks[4].getQuestion());
+        // model.put("task3", tasks[2].getQuestion());
+        // model.put("task4", tasks[3].getQuestion());
+        // model.put("task5", tasks[4].getQuestion());
 
         session.setAttribute("tasks", tasks);
 
@@ -116,31 +117,28 @@ public class LtiHandler {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("username", username);
         model.put("numberOfLab", labId );
-        model.put("queryText", queryForm.getTextQuery());
-        model.put("queryText2", queryForm.getTextQuery2());
-        model.put("queryText3", queryForm.getTextQuery3());
-        model.put("queryText4", queryForm.getTextQuery4());
-        model.put("queryText5", queryForm.getTextQuery5());
 
         Task[] tasks = (Task[]) request.getSession().getAttribute("tasks");
         tasks[0].setAnswer(queryForm.getTextQuery());
         tasks[1].setAnswer(queryForm.getTextQuery2());
-        tasks[2].setAnswer(queryForm.getTextQuery3());
-        tasks[3].setAnswer(queryForm.getTextQuery4());
-        tasks[4].setAnswer(queryForm.getTextQuery5());
+        // tasks[2].setAnswer(queryForm.getTextQuery3());
+        // tasks[3].setAnswer(queryForm.getTextQuery4());
+        // tasks[4].setAnswer(queryForm.getTextQuery5());
         for(Task t : tasks) {
             t.setComplete( !(t.getAnswer() == null || t.getAnswer().isEmpty()) );
         }
 
-        Service dataStore = ServiceFactory.getExampleService(); // TODO change to getDataStoreService()
         dataStore.checkTasks(tasks);
+
+        model.put("queryText",  getSQLStringWithComments(tasks[0]) );
+        model.put("queryText2", getSQLStringWithComments(tasks[1]) );
 
         float x = 0;
         for(Task t : tasks) {
             x += t.getRating();
         }
 
-        model.put("rating", String.format("%.2f", x * 100 / 5) + "%");
+        model.put("rating", String.format("%.2f", x * 100 / tasks.length) + "%");
 
         try {
             String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME);
@@ -156,6 +154,17 @@ public class LtiHandler {
         }
 
         return "result";
+    }
+
+    private String getSQLStringWithComments(Task task) {
+        return new StringBuilder()
+            .append("# \n# ")
+            .append(task.getQuestion())
+            .append("\n# \n# ")
+            .append( (task.getRating() < 0.1f) ? "Ответ неверный" : "Ответ верный" )
+            .append("\n# \n")
+            .append(task.getAnswer())
+            .toString();
     }
 
     public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session) {
