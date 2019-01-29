@@ -1,7 +1,7 @@
-package com.tuneit.edx.lti.cources;
+package com.tuneit.edx.lti.courses;
 
-import com.tuneit.edx.lti.cources.db.DBTaskGenerationService;
-import com.tuneit.edx.lti.cources.example.ExampleService;
+import com.tuneit.edx.lti.courses.db.DBTaskGenerationService;
+import com.tuneit.edx.lti.courses.example.ExampleService;
 
 public class ServiceFactory {
 

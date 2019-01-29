@@ -1,8 +1,8 @@
 package com.tuneit.edx.lti.unit;
 
 import com.tuneit.edx.lti.config.WebConfig;
-import com.tuneit.edx.lti.cources.Service;
-import com.tuneit.edx.lti.cources.Task;
+import com.tuneit.edx.lti.courses.Service;
+import com.tuneit.edx.lti.courses.Task;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;

@@ -1,9 +1,9 @@
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
-import com.tuneit.edx.lti.cources.Task;
-import com.tuneit.edx.lti.cources.db.schema.Schema;
-import com.tuneit.edx.lti.cources.db.schema.SchemaLoader;
-import com.tuneit.edx.lti.cources.db.schema.Table;
+import com.tuneit.edx.lti.courses.Task;
+import com.tuneit.edx.lti.courses.db.schema.Schema;
+import com.tuneit.edx.lti.courses.db.schema.SchemaLoader;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;

@@ -1,7 +1,7 @@
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
-import com.tuneit.edx.lti.cources.Task;
-import com.tuneit.edx.lti.cources.db.schema.Schema;
+import com.tuneit.edx.lti.courses.Task;
+import com.tuneit.edx.lti.courses.db.schema.Schema;
 import java.util.Random;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

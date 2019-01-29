@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.cources;
+package com.tuneit.edx.lti.courses;
 
 /**
  * Generator of tasks

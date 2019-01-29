@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;

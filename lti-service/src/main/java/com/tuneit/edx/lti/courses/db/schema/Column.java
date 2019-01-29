@@ -1,9 +1,8 @@
-package com.tuneit.edx.lti.cources.db.schema;
+package com.tuneit.edx.lti.courses.db.schema;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  *

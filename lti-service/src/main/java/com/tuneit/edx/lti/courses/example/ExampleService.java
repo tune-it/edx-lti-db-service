@@ -1,7 +1,7 @@
-package com.tuneit.edx.lti.cources.example;
+package com.tuneit.edx.lti.courses.example;
 
-import com.tuneit.edx.lti.cources.Service;
-import com.tuneit.edx.lti.cources.Task;
+import com.tuneit.edx.lti.courses.Service;
+import com.tuneit.edx.lti.courses.Task;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

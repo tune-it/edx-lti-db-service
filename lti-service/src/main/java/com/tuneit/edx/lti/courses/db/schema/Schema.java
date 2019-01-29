@@ -1,7 +1,7 @@
-package com.tuneit.edx.lti.cources.db.schema;
+package com.tuneit.edx.lti.courses.db.schema;
 
-import com.tuneit.edx.lti.cources.db.Lab;
-import com.tuneit.edx.lti.cources.db.Lab02;
+import com.tuneit.edx.lti.courses.db.Lab;
+import com.tuneit.edx.lti.courses.db.Lab02;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

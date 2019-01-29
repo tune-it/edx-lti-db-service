@@ -1,14 +1,10 @@
-package com.tuneit.edx.lti.cources.db.schema;
+package com.tuneit.edx.lti.courses.db.schema;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.cources.db.schema;
+package com.tuneit.edx.lti.courses.db.schema;
 
 import java.util.List;
 import javax.xml.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.cources;
+package com.tuneit.edx.lti.courses;
 
 import java.util.Calendar;
 import java.util.NoSuchElementException;

@@ -1,5 +1,5 @@
 
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
 /**
  * Dummy Class to persisting store already generated task question and answer 

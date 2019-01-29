@@ -1,9 +1,9 @@
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
-import com.tuneit.edx.lti.cources.Service;
-import com.tuneit.edx.lti.cources.Task;
-import com.tuneit.edx.lti.cources.db.schema.Schema;
-import com.tuneit.edx.lti.cources.db.schema.SchemaLoader;
+import com.tuneit.edx.lti.courses.Service;
+import com.tuneit.edx.lti.courses.Task;
+import com.tuneit.edx.lti.courses.db.schema.Schema;
+import com.tuneit.edx.lti.courses.db.schema.SchemaLoader;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

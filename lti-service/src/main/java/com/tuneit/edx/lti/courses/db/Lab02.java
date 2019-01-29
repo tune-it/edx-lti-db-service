@@ -1,9 +1,9 @@
-package com.tuneit.edx.lti.cources.db;
+package com.tuneit.edx.lti.courses.db;
 
-import com.tuneit.edx.lti.cources.Task;
-import com.tuneit.edx.lti.cources.db.schema.Column;
-import com.tuneit.edx.lti.cources.db.schema.Schema;
-import com.tuneit.edx.lti.cources.db.schema.Table;
+import com.tuneit.edx.lti.courses.Task;
+import com.tuneit.edx.lti.courses.db.schema.Column;
+import com.tuneit.edx.lti.courses.db.schema.Schema;
+import com.tuneit.edx.lti.courses.db.schema.Table;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
