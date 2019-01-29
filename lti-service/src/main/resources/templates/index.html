@@ -18,7 +18,9 @@
     <div ng-cloak="" flex class="query-container">
         <md-content layout-padding="">
             <h2>Введите запросы для получения следующих данных:</h2>
-            <form method="post" th:object="${query}" th:action="@{'/api/rest/lti/' + ${numberOfLab} + '/result'}">
+            <form method="post" th:object="${query}" th:action="@{'/api/rest/lti/db/result'}">
+
+                <input type="hidden" name="custom_labId" th:value="${numberOfLab}">
 
                 <md-input-container class="md-block">
                     <label th:text="${task1}"></label>

@@ -42,7 +42,7 @@ public class EdxLtiController implements LtiHandler {
     @Override
     @PostMapping(MAIN_QUERY_URL)
     public String handleMainQuery (
-            @PathVariable("labId") String labId,
+            @RequestParam(name = LIS_LAB_ID_NAME) String labId,
             @RequestParam(name = LIS_SOURCED_ID_NAME) String sourcedId,
             @RequestParam(name = LIS_OUTCOME_URL_NAME) String serviceUrl,
             HttpServletRequest request, Map<String, Object> model
@@ -64,7 +64,7 @@ public class EdxLtiController implements LtiHandler {
     @Lti
     @PostMapping(RESULT_QUERY_URL)
     public String handleResultsQuery(
-            @PathVariable("labId") String labId,
+            @RequestParam(name = LIS_LAB_ID_NAME) String labId,
             HttpServletRequest request,
             Map<String, Object> model,
             @ModelAttribute TasksForm queryForm

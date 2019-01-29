@@ -11,9 +11,11 @@ public interface LtiHandler {
 
     String LIS_OUTCOME_URL_NAME = "lis_outcome_service_url";
 
-    String MAIN_QUERY_URL       = "/api/rest/lti/{labId}";
+    String LIS_LAB_ID_NAME      = "custom_labId";
 
-    String RESULT_QUERY_URL     = "/api/rest/lti/{labId}/result";
+    String MAIN_QUERY_URL       = "/api/rest/lti/db";
+
+    String RESULT_QUERY_URL     = "/api/rest/lti/db/result";
 
     String handleMainQuery(String labId, String sourcedId, String serviceUrl,
        HttpServletRequest request, Map<String, Object> model);

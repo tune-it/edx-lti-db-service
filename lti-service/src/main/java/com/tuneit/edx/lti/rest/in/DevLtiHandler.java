@@ -24,7 +24,7 @@ public class DevLtiHandler implements LtiHandler {
     @Override
     @GetMapping(MAIN_QUERY_URL)
     public String handleMainQuery(
-            @PathVariable(value = "labId", required = false) String labId,
+            @RequestParam(name=LIS_LAB_ID_NAME, required = false) String labId,
             @RequestParam(name=LIS_SOURCED_ID_NAME, required = false) String sourcedId,
             @RequestParam(name=LIS_OUTCOME_URL_NAME, required = false) String serviceUrl,
             HttpServletRequest request,
@@ -45,7 +45,7 @@ public class DevLtiHandler implements LtiHandler {
     @Override
     @PostMapping(RESULT_QUERY_URL)
     public String handleResultsQuery(
-            @PathVariable("labId") String labId,
+            @RequestParam(name=LIS_LAB_ID_NAME, required = false) String labId,
             HttpServletRequest request,
             Map<String, Object> model,
             @ModelAttribute TasksForm queryForm
