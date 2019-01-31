@@ -1,8 +1,8 @@
 package com.tuneit.edx.lti.unit;
 
 import com.tuneit.edx.lti.config.WebConfig;
-import com.tuneit.edx.lti.courses.Service;
-import com.tuneit.edx.lti.courses.Task;
+import com.tuneit.courses.TaskGeneratorService;
+import com.tuneit.courses.Task;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
@@ -27,7 +27,7 @@ public class ModelViewProcessor {
     private static final String PATH_TO_RESULTS_PAGE = "result";
 
     @Autowired
-    private Service service;
+    private TaskGeneratorService service;
 
     @Autowired
     private ScoreSender scoreSender;
