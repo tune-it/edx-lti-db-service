@@ -32,7 +32,7 @@
         <repository>
             <id>tuneit-public-repo</id>
             <name>tuneit public repo</name>
-            <url>http://192.168.3.186:8081/repository/tuneit-public-repo/</url>
+	    <url>https://nexus.tune-it.ru/repository/tuneit-public-repo/</url>
         </repository>
     </repositories>
 
