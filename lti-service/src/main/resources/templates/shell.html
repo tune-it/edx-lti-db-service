@@ -9,16 +9,17 @@
     <md-toolbar class="md-primary">
         <div layout="row" layout-padding layout-align="space-between center">
             <div class="md-toolbar-tools">
-                <h2 class="md-flex">Sql shell</span>"</h2>
+                <h2 class="md-flex">Sql shell</h2>
             </div>
             <span style="flex: 1 1 auto;" />
         </div>
     </md-toolbar>
 
-    <div ng-cloak="" flex class="query-container">
-        <md-content layout-padding="">
-            <!--  -->
-        </md-content>
+    <div ng-controller="AppCtrl" ng-cloak="" flex class="query-container">
+        <div id="shell-buffer" style="white-space: pre-line">
+        {{terminalContent}}
+        </div>
+        <input id="cursor" class="terminal-cursor" type="text" ng-model="sqlQuery" ng-keypress="processSql($event)" />
     </div>
 
     <!-- Angular Material requires Angular.js Libraries -->
@@ -32,6 +33,5 @@
 
     <!-- Your application bootstrap  -->
     <script src="/assets/js/edx.js"></script>
-
 </body>
 </html>

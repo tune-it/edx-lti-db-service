@@ -1,4 +1,26 @@
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+body {
+    background: black !important;
+    color: white !important;
+}
+
+.query-container {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    border-width: 0 !important;
+    background: black !important;
+    color: white !important;
+}
+
+.query-container > * {
+    width: 100%;
+}
+
+.terminal-cursor::before {
+    content: 'user@datastorage:~  ';
+}
 
 .sql-form {
     min-width: 150px;
@@ -9,13 +31,3 @@
 .input-full-width {
     width: 100%;
 }
-
-.query-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.query-container > * {
-    width: 100%;
-}
-
