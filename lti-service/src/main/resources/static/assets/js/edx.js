@@ -1,40 +1,32 @@
 
-var app = angular.module('BlankApp', ['ngAria', 'ngAnimate', 'ngMaterial']);
+var app = angular.module('BlankApp', ['ngAria', 'ngAnimate', 'ngMaterial', 'ngSanitize']);
 
-app.controller('AppCtrl', function($scope, $http) {
+app.controller('AppCtrl', function($sce, $scope, $http) {
 
-    $scope.terminalContent = "user@datastorage:~ ";
+    let PS2content = "user@datastorage:~";
 
-    $scope.processSql = function (e) {
-        if(e.which === 13) {
-
-            var query = $scope.sqlQuery;
-
-            if(query === "") {
-                setValues("");
-            } else {
-
-                /* create post query to LTI */
-
+    jQuery(function($) {
+        $('#shell').terminal(function(command, term) {
+            if (command !== '') {
                 $http({
                     method: 'POST',
                     url: '/api/rest/lti/shell/sql/query',
-                    data: "query=" + query,
+                    data: "query=" + command,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function (_data, status, headers, config) {
-                    setValues(_data);
+                    term.echo(_data, {raw: true});
                 }).error(function (_data, status, header, config) {
-                    setValues(_data);
+                    term.echo(_data, {raw: true});
                 });
-
-                /* ************************ */
+            } else {
+                this.echo('');
             }
-        }
-    };
 
-    function setValues(__res) {
-        $scope.terminalContent = $scope.terminalContent + "\nuser@datastorage:~  " + $scope.sqlQuery + "\n" + __res;
-        $scope.sqlQuery = "";
-    }
-
+        }, {
+            greetings: '',
+            height: 736,
+            name: 'sql_shell',
+            prompt: PS2content,
+        });
+    });
 });

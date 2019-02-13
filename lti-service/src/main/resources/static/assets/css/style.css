@@ -3,31 +3,12 @@ body {
     color: white !important;
 }
 
-.query-container {
-    display: flex;
-    flex-direction: column;
-}
-
-input {
-    border-width: 0 !important;
-    background: black !important;
-    color: white !important;
-}
-
-.query-container > * {
-    width: 100%;
-}
-
-.terminal-cursor::before {
-    content: 'user@datastorage:~  ';
-}
-
-.sql-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-}
 
 .input-full-width {
     width: 100%;
+}
+
+
+#shell h1 {
+    font-size: 1em;
 }

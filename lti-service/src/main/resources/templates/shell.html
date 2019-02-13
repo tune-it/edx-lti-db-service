@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/assets/css/style.css" />
         <!-- Angular Material style sheet -->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.1.2/css/jquery.terminal.min.css" rel="stylesheet"/>
     </head>
     <body ng-app="BlankApp" ng-cloak>
     <md-toolbar class="md-primary">
@@ -16,10 +17,9 @@
     </md-toolbar>
 
     <div ng-controller="AppCtrl" ng-cloak="" flex class="query-container">
-        <div id="shell-buffer" style="white-space: pre-line">
-        {{terminalContent}}
+        <div id="shell">
+
         </div>
-        <input id="cursor" class="terminal-cursor" type="text" ng-model="sqlQuery" ng-keypress="processSql($event)" />
     </div>
 
     <!-- Angular Material requires Angular.js Libraries -->
@@ -27,9 +27,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
 
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.1.2/js/jquery.terminal.min.js"></script>
 
     <!-- Your application bootstrap  -->
     <script src="/assets/js/edx.js"></script>
