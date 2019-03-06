@@ -3,21 +3,22 @@ var app = angular.module('BlankApp', ['ngAria', 'ngAnimate', 'ngMaterial', 'ngSa
 
 app.controller('AppCtrl', function($sce, $scope, $http) {
 
-    let PS2content = "user@datastorage:~";
+    let PS2content = "postgres=>";
 
     jQuery(function($) {
         $('#shell').terminal(function(command, term) {
             if (command !== '') {
-                $http({
+                term.pause();
+		        $.ajax({
                     method: 'POST',
                     url: '/api/rest/lti/shell/sql/query',
                     data: "query=" + command,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function (_data, status, headers, config) {
-                    term.echo(_data, {raw: true});
+                    term.echo(_data, {raw: true}).resume();
                 }).error(function (_data, status, header, config) {
-                    term.echo(_data, {raw: true});
-                });
+                    term.echo(_data, {raw: true}).resume();
+               	});
             } else {
                 this.echo('');
             }
