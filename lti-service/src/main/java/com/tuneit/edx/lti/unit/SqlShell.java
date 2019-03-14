@@ -1,6 +1,7 @@
 package com.tuneit.edx.lti.unit;
 
 import com.tuneit.courses.db.SelectProcessor;
+import com.tuneit.courses.db.SelectResult;
 import com.tuneit.courses.db.schema.Schema;
 import com.tuneit.courses.db.schema.SchemaLoader;
 import lombok.extern.slf4j.Slf4j;
@@ -13,20 +14,20 @@ import org.springframework.stereotype.Component;
 public class SqlShell {
 
     public String exec(String sql) {
-        StringBuilder result = new StringBuilder();
+        SelectResult result;
         try {
             Schema schema = SchemaLoader.getSchema(0);
             SelectProcessor selectProc = new SelectProcessor();
-            selectProc.execute_select(schema, sql, 10, result);
+            result = selectProc.execute_select(schema, sql, 10, true);
         }catch (Exception e) {
-            result.append(e.getMessage());
+            return e.getMessage();
         }
 
-        if(result.length() == 0) {
-            result.append("----------\n").append("No rows");
+        if (result.getRowCount() == 0) {
+            return "----------\nNo rows";
         }
 
-        return result.toString();
+        return result.getHtmlRows().toString();
     }
 
 }
