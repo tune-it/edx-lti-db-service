@@ -10,3 +10,7 @@ body {
 #shell h1 {
     font-size: 1em;
 }
+
+#shell .cell{
+    color: white;
+}
