@@ -26,7 +26,7 @@ public class EdxScoreSender implements ScoreSender {
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
 
-        String score = String.format("%2.f", rating);
+        String score = String.format("%.2f", rating);
 
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
         Call<Void> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));

@@ -52,13 +52,7 @@ public class EdxLtiController implements LtiHandler {
         return modelViewProcessor.renderMain(labId, sourcedId, serviceUrl, request, model);
     }
 
-    /**
-     * @param labId      identifier of current lab
-     * @param request    HTTP-request object
-     * @param model      contains objects for rendering thymeleaf pages
-     * @param queryForm  contains form`s data (learners` answers)
-     * @return path to thymeleaf template with results page
-     */
+
     @Lti
     @PostMapping(RESULT_QUERY_URL)
     public String handleResultsQuery(

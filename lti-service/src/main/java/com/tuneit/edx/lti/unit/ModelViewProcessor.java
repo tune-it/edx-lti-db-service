@@ -1,8 +1,8 @@
 package com.tuneit.edx.lti.unit;
 
-import com.tuneit.edx.lti.config.WebConfig;
-import com.tuneit.courses.TaskGeneratorService;
 import com.tuneit.courses.Task;
+import com.tuneit.courses.TaskGeneratorService;
+import com.tuneit.edx.lti.config.WebConfig;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
@@ -38,16 +38,27 @@ public class ModelViewProcessor {
     public String renderMain(String labId, String sourcedId, String serviceUrl,
                                 HttpServletRequest request, Map<String, Object> model) {
 
-        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
+        String username = getUsername(request);
+
         HttpSession session  = request.getSession();
 
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId );
 
         // TODO temporary hardcode. See ticket #3 and #2
-        Task[] tasks = service.getTasks(userInfo.getUsername(), labId, String.valueOf(variant++), 0);
+        Task[] tasks = service.getTasks(username, labId, String.valueOf(variant++), 0);
         model.put("task1", tasks[0].getQuestion());
         model.put("task2", tasks[1].getQuestion());
+        model.put("task3", tasks[2].getQuestion());
+        model.put("task4", tasks[3].getQuestion());
+        model.put("task5", tasks[4].getQuestion());
+        model.put("task6", tasks[5].getQuestion());
+        model.put("task7", tasks[6].getQuestion());
+        model.put("task8", tasks[7].getQuestion());
+        model.put("task9", tasks[8].getQuestion());
+        model.put("task10", tasks[9].getQuestion());
+        model.put("task11", tasks[10].getQuestion());
+        model.put("task12", tasks[11].getQuestion());
 
         session.setAttribute("tasks", tasks);
 
@@ -62,26 +73,30 @@ public class ModelViewProcessor {
     public String renderResult(String labId, HttpServletRequest request,
                            Map<String, Object> model, TasksForm queryForm) {
 
-        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
-
-        String username = userInfo == null ? "Unknown" :
-                ( userInfo.getUsername() == null ? "Guest" : userInfo.getUsername() );
+        String username = getUsername(request);
 
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("username", username);
         model.put("numberOfLab", labId );
 
         Task[] tasks = (Task[]) request.getSession().getAttribute("tasks");
-        tasks[0].setAnswer(queryForm.getTextQuery());
-        tasks[1].setAnswer(queryForm.getTextQuery2());
+        for (int i = 0; i < tasks.length; i++) {
+            tasks[i].setAnswer(queryForm.asArray()[i]);
+        }
+
         for(Task t : tasks) {
             t.setComplete( !(t.getAnswer() == null || t.getAnswer().isEmpty()) );
         }
 
         service.checkTasks(tasks);
 
-        model.put("queryText",  getSQLStringWithComments(tasks[0]) );
-        model.put("queryText2", getSQLStringWithComments(tasks[1]) );
+        for (int i = 0; i < 12; i++) {
+            if (i == 0) {
+                model.put("queryText", getSQLStringWithComments(tasks[0]));
+            } else {
+                model.put("queryText" + (i + 1), getSQLStringWithComments(tasks[i]));
+            }
+        }
 
         float x = 0;
         for(Task t : tasks) {
@@ -117,6 +132,7 @@ public class ModelViewProcessor {
     }
 
     // TODO move to Task.class or some TaskUtil
+
     private String getSQLStringWithComments(Task task) {
         return new StringBuilder()
                 .append("# \n# ")
@@ -126,5 +142,12 @@ public class ModelViewProcessor {
                 .append("\n# \n")
                 .append(task.getAnswer())
                 .toString();
+    }
+
+    private String getUsername(HttpServletRequest request) {
+        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
+
+        return userInfo == null ? "Unknown" :
+                (userInfo.getUsername() == null ? "Guest" : userInfo.getUsername());
     }
 }
