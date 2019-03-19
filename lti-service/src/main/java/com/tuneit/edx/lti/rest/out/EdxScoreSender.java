@@ -30,6 +30,7 @@ public class EdxScoreSender implements ScoreSender {
 
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
         Call<Void> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));
+        log.debug("{}", score);
         Response<Void> execute = response.execute();
         log.debug(execute.message());
         return execute.code();
