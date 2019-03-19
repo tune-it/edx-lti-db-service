@@ -3,6 +3,7 @@ package com.tuneit.edx.lti.unit;
 import com.tuneit.courses.Task;
 import com.tuneit.courses.TaskGeneratorService;
 import com.tuneit.edx.lti.config.WebConfig;
+import com.tuneit.edx.lti.rest.in.OAuthHeaders;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 import static com.tuneit.edx.lti.rest.in.LtiHandler.LIS_OUTCOME_URL_NAME;
 import static com.tuneit.edx.lti.rest.in.LtiHandler.LIS_SOURCED_ID_NAME;
+import static com.tuneit.edx.lti.rest.in.LtiHandler.OAUTH_HEADERS;
 
 @Slf4j
 @Component
@@ -111,7 +113,7 @@ public class ModelViewProcessor {
 
             log.debug("Push score to URL: " + serviceUrl);
 
-            int result = scoreSender.push(sourcedId, serviceUrl, x / tasks.length);
+            int result = scoreSender.push(sourcedId, serviceUrl, x / tasks.length, (OAuthHeaders) request.getSession().getAttribute(OAUTH_HEADERS));
             log.debug("RETURN CODE = " + result);
         } catch (Exception e) {
             e.printStackTrace();

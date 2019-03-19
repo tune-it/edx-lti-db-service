@@ -1,7 +1,12 @@
 package com.tuneit.edx.lti.rest.out;
 
+import com.tuneit.edx.lti.rest.in.OAuthHeaders;
 import com.tuneit.edx.lti.web.ScoreRestAPI;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
@@ -20,18 +25,39 @@ import java.io.IOException;
 @Profile("prod")
 public class EdxScoreSender implements ScoreSender {
 
-    public int push(String sourcedId, String outcomeServiceUrl, float rating) throws IOException {
+    public int push(String sourcedId, String outcomeServiceUrl, float rating, OAuthHeaders headers) throws IOException {
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+              @Override
+              public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+                  Request original = chain.request();
+
+                  Request.Builder builder = original.newBuilder();
+
+                  for(Pair pair : headers.getAll()) {
+                      builder.header((String)pair.getKey(), (String)pair.getValue());
+                  }
+
+                  Request request = builder
+                          .method(original.method(), original.body())
+                          .build();
+
+                  return chain.proceed(request);
+              }
+        });
+
+        OkHttpClient client = httpClient.build();
+
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://localhost:18010")
             .addConverterFactory(ScalarsConverterFactory.create())
+            .client(client)
             .build();
 
         String score = String.format("%.2f", rating);
 
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
-
-        log.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUEST");
-        log.debug(getXmlContent(sourcedId, score));
         Call<String> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));
         Response<String> execute = response.execute();
 
