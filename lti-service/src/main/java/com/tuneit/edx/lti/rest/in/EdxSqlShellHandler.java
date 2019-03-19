@@ -25,7 +25,7 @@ public class EdxSqlShellHandler implements SqlShellHandler {
     @Override
     @PostMapping(MAIN_URL)
     public String handleInitShell() {
-
+        
         // may be add some objects to model of page
 
         return "shell";

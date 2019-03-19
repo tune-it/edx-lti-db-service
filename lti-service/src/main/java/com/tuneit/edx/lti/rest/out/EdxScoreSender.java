@@ -29,10 +29,15 @@ public class EdxScoreSender implements ScoreSender {
         String score = String.format("%.2f", rating);
 
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
-        Call<Void> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));
-        log.debug("{}", score);
-        Response<Void> execute = response.execute();
+
+        log.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REQUEST");
+        log.debug(getXmlContent(sourcedId, score));
+        Call<String> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));
+        Response<String> execute = response.execute();
+
+        log.debug("################################# RESPONSE");
         log.debug(execute.message());
+        log.debug(execute.body());
         return execute.code();
     }
 }

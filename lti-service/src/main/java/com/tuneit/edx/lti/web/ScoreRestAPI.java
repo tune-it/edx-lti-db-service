@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 public interface ScoreRestAPI {
 
     @POST("{fullUrl}")
-    Call<Void> post(
+    Call<String> post(
         @Path(value = "fullUrl", encoded = true) String outcomeServiceUrl,
         @Body                                    String body
     );
