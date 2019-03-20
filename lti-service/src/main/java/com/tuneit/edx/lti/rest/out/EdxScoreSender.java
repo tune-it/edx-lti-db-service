@@ -27,6 +27,9 @@ public class EdxScoreSender implements ScoreSender {
 
     public int push(String sourcedId, String outcomeServiceUrl, float rating, OAuthHeaders headers) throws IOException {
 
+        String score = String.format("%.2f", rating);
+        String body = getXmlContent(sourcedId, score);
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
               @Override
@@ -35,13 +38,11 @@ public class EdxScoreSender implements ScoreSender {
 
                   Request.Builder builder = original.newBuilder();
 
-                  for(Pair pair : headers.getAll()) {
-                      builder.header((String)pair.getKey(), (String)pair.getValue());
-                  }
+                  builder.header(headers.name(), headers.value(body));
 
                   Request request = builder
-                          .method(original.method(), original.body())
-                          .build();
+                      .method(original.method(), original.body())
+                      .build();
 
                   return chain.proceed(request);
               }
@@ -55,10 +56,8 @@ public class EdxScoreSender implements ScoreSender {
             .client(client)
             .build();
 
-        String score = String.format("%.2f", rating);
-
         ScoreRestAPI service = retrofit.create(ScoreRestAPI.class);
-        Call<String> response = service.post(outcomeServiceUrl, getXmlContent(sourcedId, score));
+        Call<String> response = service.post(outcomeServiceUrl, body);
         Response<String> execute = response.execute();
 
         log.debug("################################# RESPONSE");
