@@ -40,4 +40,6 @@
 		<appender-ref ref="DEV_FILE" />
 	</root>
 
+	<logger name="org.apache.tomcat.util.net.NioEndpoint" level="OFF"/>
+
 </configuration>
