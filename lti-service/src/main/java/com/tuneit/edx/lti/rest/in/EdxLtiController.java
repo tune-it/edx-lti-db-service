@@ -2,12 +2,8 @@ package com.tuneit.edx.lti.rest.in;
 
 import com.tuneit.edx.lti.to.TasksForm;
 import com.tuneit.edx.lti.unit.ModelViewProcessor;
-
 import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.lang3.tuple.Pair;
 import org.imsglobal.aspect.Lti;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -49,16 +44,6 @@ public class EdxLtiController implements LtiHandler {
         ) {
 
         // pre handling here
-        OAuthHeaders oAuth = new OAuthHeaders();
-        for(Pair pair : oAuth.getAll()) {
-            String key = (String)pair.getKey();
-            String header = request.getHeader(key);
-            if(header != null && !header.isEmpty()) {
-                pair.setValue(header);
-            }
-        }
-
-        request.getSession().setAttribute(OAUTH_HEADERS, oAuth);
 
         // redirect call to logical unit
         return modelViewProcessor.renderMain(labId, sourcedId, serviceUrl, request, model);

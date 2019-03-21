@@ -1,7 +1,5 @@
 package com.tuneit.edx.lti.rest.out;
 
-import com.tuneit.edx.lti.rest.in.OAuthHeaders;
-
 import java.io.IOException;
 
 public interface ScoreSender {
@@ -42,6 +40,6 @@ public interface ScoreSender {
                 .replace(SCORE_PATTERN, score);
     }
 
-    int push(String sourcedId, String outcomeServiceUrl, float rating, OAuthHeaders headers) throws IOException;
+    int push(String sourcedId, String outcomeServiceUrl, float rating) throws IOException;
 
 }

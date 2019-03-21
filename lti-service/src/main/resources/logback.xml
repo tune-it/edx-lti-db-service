@@ -22,6 +22,9 @@
 
 	<appender name="DEV_FILE" class="ch.qos.logback.core.FileAppender">
 		<file>openedx-full.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
 		<append>true</append>
 		<encoder>
 			<pattern>%-5level %logger{25} - %boldWhite(%msg%n)</pattern>
