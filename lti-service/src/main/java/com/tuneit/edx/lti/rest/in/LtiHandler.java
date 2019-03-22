@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface LtiHandler {
 
-    String OAUTH_HEADERS = "OAUTH_HEADERS";
-
     String LIS_SOURCED_ID_NAME  = "lis_result_sourcedid";
 
     String LIS_OUTCOME_URL_NAME = "lis_outcome_service_url";
