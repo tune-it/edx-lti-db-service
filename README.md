@@ -6,14 +6,14 @@ Task number should be scpecified as an custom parameter `labId` in LTI module se
 
 ### Отправка результатов в EDX
 ___
-Для отправки результатов в EDX нам потребуется `sourcedId`, `outcomeServiceUrl` и `rating` - сам результат для отправки.
-Кроме того, нам потребуюется `CONSUMER_KEY` и `CONSUMER_SECRET`, которые задаются в LTI паспорте в формате
+Для отправки результатов в EDX нам потребуется `sourcedId`, `outcomeServiceUrl` и `rating` -- сам результат для отправки.
+Кроме того, нам потребуются `CONSUMER_KEY` и `CONSUMER_SECRET`, которые задаются в LTI паспорте в формате
 ```
 [
     "lti_id:consumer_key:consumer_secret"
 ]
 ```
-lti_id необходимо так же указать в настройках LTI блока
+lti_id необходимо также указать в настройках LTI блока
 
 Всю чёрную магию по отправке данных в EDX за нас делает 
 ```xml
@@ -69,7 +69,7 @@ public int push(String sourcedId, String outcomeServiceUrl, float rating) throws
     }
 ```
 
-Если настройки LTI указаны верно, то всё должно пройти гладко, если же в ответе от EDX мы видим XML с ошибкой о проваленной валидации OAuth подписи, можно воспользоваться следующийм кодом:
+Если настройки LTI указаны верно, то всё должно пройти гладко, если же в ответе от EDX мы видим XML с ошибкой о проваленной валидации OAuth подписи, можно воспользоваться следующим кодом:
 ```python
 from oauthlib.oauth1.rfc5849 import signature
 import mock
@@ -98,7 +98,7 @@ def validate():
 
 validate()
 ```
-`АЛЯРМА!!!!: ` Для запуска этого кода необходимо использовать `ВТОРОЙ` питон, так же надо установить следующие зависимости:
+`АЛЯРМА!!!!: ` Для запуска этого кода необходимо использовать `ВТОРОЙ` питон, также надо установить следующие зависимости:
 ```bash
     pip2 install oauthlib
     pip2 install mock
