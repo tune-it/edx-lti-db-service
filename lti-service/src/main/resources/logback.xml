@@ -16,7 +16,7 @@
 		</filter>
 		<append>true</append>
 		<encoder>
-			<pattern>%-5level %logger{25} - %boldWhite(%msg%n)</pattern>
+			<pattern>%-5level %logger{25} \(%line\) - %boldWhite(%msg%n)</pattern>
 		</encoder>
 	</appender>
 
@@ -27,7 +27,7 @@
 		</filter>
 		<append>true</append>
 		<encoder>
-			<pattern>%-5level %logger{25} - %boldWhite(%msg%n)</pattern>
+			<pattern>%-5level %logger{25} \(%line\) - %boldWhite(%msg%n)</pattern>
 		</encoder>
 	</appender>
 

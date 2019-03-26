@@ -7,33 +7,12 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
 </head>
 <body ng-app="BlankApp" ng-cloak>
-<md-toolbar class="md-primary">
-    <div layout="row" layout-padding layout-align="space-between center">
-        <div class="md-toolbar-tools">
-            <h2 class="md-flex">Лабораторная работа "<span th:text="${numberOfLab}"></span>"</h2>
-        </div>
-        <span style="flex: 1 1 auto;" />
-    </div>
-</md-toolbar>
-
 <div ng-cloak="" flex>
     <md-content layout-padding="">
         <div>Обработан результат студента <span th:text="${username}"></span></div>
         <div>Верных ответов:<span th:text="${rating}"></span></div>
 
         <pre><code class="sql" th:text="${queryText}"></code></pre>
-        <pre><code class="sql" th:text="${queryText2}"></code></pre>
-        <pre><code class="sql" th:text="${queryText3}"></code></pre>
-        <pre><code class="sql" th:text="${queryText4}"></code></pre>
-        <pre><code class="sql" th:text="${queryText5}"></code></pre>
-        <pre><code class="sql" th:text="${queryText6}"></code></pre>
-        <pre><code class="sql" th:text="${queryText7}"></code></pre>
-        <pre><code class="sql" th:text="${queryText8}"></code></pre>
-        <pre><code class="sql" th:text="${queryText9}"></code></pre>
-        <pre><code class="sql" th:text="${queryText10}"></code></pre>
-        <pre><code class="sql" th:text="${queryText11}"></code></pre>
-        <pre><code class="sql" th:text="${queryText12}"></code></pre>
-
     </md-content>
 </div>
 

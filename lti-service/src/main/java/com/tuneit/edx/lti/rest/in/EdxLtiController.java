@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,17 +37,18 @@ public class EdxLtiController implements LtiHandler {
     @Lti
     @Override
     @PostMapping(MAIN_QUERY_URL)
-    public String handleMainQuery (
+    public String handleMainQuery(
             @RequestParam(name = LIS_LAB_ID_NAME) String labId,
             @RequestParam(name = LIS_SOURCED_ID_NAME) String sourcedId,
             @RequestParam(name = LIS_OUTCOME_URL_NAME) String serviceUrl,
-            HttpServletRequest request, Map<String, Object> model
-        ) {
+            HttpServletRequest request, Map<String, Object> model,
+            @PathVariable int taskId
+    ) {
 
         // pre handling here
-
+        log.info("MAIN_QUERY : {}, {}, {}", labId, sourcedId, serviceUrl);
         // redirect call to logical unit
-        return modelViewProcessor.renderMain(labId, sourcedId, serviceUrl, request, model);
+        return modelViewProcessor.renderMain(labId, sourcedId, serviceUrl, request, model, taskId);
     }
 
     @Lti
@@ -55,12 +57,13 @@ public class EdxLtiController implements LtiHandler {
             @RequestParam(name = LIS_LAB_ID_NAME) String labId,
             HttpServletRequest request,
             Map<String, Object> model,
-            @ModelAttribute TasksForm queryForm
-        ) {
+            @ModelAttribute TasksForm queryForm,
+            @PathVariable int taskId
+    ) {
 
         // you can add pre handling here
 
         // redirect call to logical unit
-        return modelViewProcessor.renderResult(labId, request, model, queryForm);
+        return modelViewProcessor.renderResult(labId, request, model, queryForm, taskId);
     }
 }

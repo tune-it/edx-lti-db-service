@@ -28,7 +28,8 @@ public class DevLtiHandler implements LtiHandler {
             @RequestParam(name=LIS_SOURCED_ID_NAME, required = false) String sourcedId,
             @RequestParam(name=LIS_OUTCOME_URL_NAME, required = false) String serviceUrl,
             HttpServletRequest request,
-            Map<String, Object> model) {
+            Map<String, Object> model,
+            @PathVariable int taskId) {
 
         // pre handling
         checkUser(request);
@@ -38,8 +39,8 @@ public class DevLtiHandler implements LtiHandler {
                 sourcedId == null ? "DEBUG_ID" : sourcedId,
                 serviceUrl == null ? "://SOUT/" : serviceUrl,
                 request,
-                model
-        );
+                model,
+                taskId);
     }
 
     @Override
@@ -48,14 +49,15 @@ public class DevLtiHandler implements LtiHandler {
             @RequestParam(name=LIS_LAB_ID_NAME, required = false) String labId,
             HttpServletRequest request,
             Map<String, Object> model,
-            @ModelAttribute TasksForm queryForm
+            @ModelAttribute TasksForm queryForm,
+            @PathVariable int taskId
     ) {
 
         // pre handling
         checkUser(request);
 
         // redirect call to logical unit
-        return modelViewProcessor.renderResult(labId, request, model, queryForm);
+        return modelViewProcessor.renderResult(labId, request, model, queryForm, taskId);
     }
 
     private void checkUser(HttpServletRequest request) {

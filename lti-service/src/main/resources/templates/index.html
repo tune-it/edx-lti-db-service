@@ -1,107 +1,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="/assets/css/style.css" />
-        <!-- Angular Material style sheet -->
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" />
-    </head>
-    <body ng-app="BlankApp" ng-cloak="">
-    <md-toolbar class="md-primary">
-        <div layout="row" layout-padding layout-align="space-between center">
-            <div class="md-toolbar-tools">
-                <h2 class="md-flex">Лабораторная работа "<span th:text="${numberOfLab}"></span>"</h2>
-            </div>
-            <span style="flex: 1 1 auto;" />
-        </div>
-    </md-toolbar>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css"/>
+</head>
+<body ng-app="BlankApp" ng-cloak="">
 
-    <div ng-cloak="" flex class="query-container">
-        <md-content layout-padding="">
-            <h2>Введите запросы для получения следующих данных:</h2>
-            <form method="post" th:object="${query}" th:action="@{'/api/rest/lti/db/result'}">
-
-                <input type="hidden" name="custom_labId" th:value="${numberOfLab}">
-
-                <md-input-container class="md-block">
-                    <div th:text="${task1}"></div>
-                    <textarea th:field="*{textQuery}" md-select-on-focus>
+<div ng-cloak="" flex class="query-container">
+    <md-content layout-padding="">
+        <form method="post" th:object="${query}" th:action="@{/api/rest/lti/db/result/__${taskId}__}">
+            <input type="hidden" name="custom_labId" th:value="${numberOfLab}">
+            <md-input-container class="md-block">
+                <div th:text="${task}"></div>
+                <textarea th:field="*{textQuery}" md-select-on-focus>
                         <pre><code class="sql"></code></pre>
                     </textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task2}"></div>
-                    <textarea th:field="*{textQuery2}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task3}"></div>
-                    <textarea th:field="*{textQuery3}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task4}"></div>
-                    <textarea th:field="*{textQuery4}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task5}"></div>
-                    <textarea th:field="*{textQuery5}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task6}"></div>
-                    <textarea th:field="*{textQuery6}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task7}"></div>
-                    <textarea th:field="*{textQuery7}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task8}"></div>
-                    <textarea th:field="*{textQuery8}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task9}"></div>
-                    <textarea th:field="*{textQuery9}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task10}"></div>
-                    <textarea th:field="*{textQuery10}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task11}"></div>
-                    <textarea th:field="*{textQuery11}" md-select-on-focus></textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <div th:text="${task12}"></div>
-                    <textarea th:field="*{textQuery12}" md-select-on-focus></textarea>
-                </md-input-container>
-
                 <md-button class="md-raised md-primary" type="submit">Отправить</md-button>
+            </md-input-container>
 
-            </form>
-        </md-content>
-    </div>
+        </form>
+    </md-content>
+</div>
 
-    <!-- Angular Material requires Angular.js Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.js"></script>
 
-    <!-- Angular Material Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-    <!-- Your application bootstrap  -->
-    <script src="/assets/js/edx.js"></script>
+<!-- Your application bootstrap  -->
+<script src="/assets/js/edx.js"></script>
 
 </body>
 </html>

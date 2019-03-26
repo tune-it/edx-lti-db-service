@@ -7,20 +7,20 @@ import java.util.Map;
 
 public interface LtiHandler {
 
-    String LIS_SOURCED_ID_NAME  = "lis_result_sourcedid";
+    String LIS_SOURCED_ID_NAME = "lis_result_sourcedid";
 
     String LIS_OUTCOME_URL_NAME = "lis_outcome_service_url";
 
-    String LIS_LAB_ID_NAME      = "custom_labId";
+    String LIS_LAB_ID_NAME = "custom_labId";
 
-    String MAIN_QUERY_URL       = "/api/rest/lti/db";
+    String MAIN_QUERY_URL = "/api/rest/lti/db/task{taskId}";
 
-    String RESULT_QUERY_URL     = "/api/rest/lti/db/result";
+    String RESULT_QUERY_URL = "/api/rest/lti/db/result/{taskId}";
 
     String handleMainQuery(String labId, String sourcedId, String serviceUrl,
-       HttpServletRequest request, Map<String, Object> model);
+                           HttpServletRequest request, Map<String, Object> model, int taskId);
 
     String handleResultsQuery(String labId,
-      HttpServletRequest request, Map<String, Object> model, TasksForm queryForm);
+                              HttpServletRequest request, Map<String, Object> model, TasksForm queryForm, int taskId);
 
 }
