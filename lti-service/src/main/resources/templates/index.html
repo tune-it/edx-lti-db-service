@@ -13,13 +13,12 @@
         <form method="post" th:object="${query}" th:action="@{/api/rest/lti/db/result/__${taskId}__}">
             <input type="hidden" name="custom_labId" th:value="${numberOfLab}">
             <md-input-container class="md-block">
-                <div th:text="${task}"></div>
-                <textarea th:field="*{textQuery}" md-select-on-focus>
+                <div class="textarea-same-row" th:text="${task}"></div>
+                <textarea class="textarea-same-row" th:field="*{textQuery}" md-select-on-focus>
                         <pre><code class="sql"></code></pre>
                     </textarea>
-                <md-button class="md-raised md-primary" type="submit">Отправить</md-button>
+                <md-button class="md-raised md-primary button-same-row" type="submit">Отправить</md-button>
             </md-input-container>
-
         </form>
     </md-content>
 </div>

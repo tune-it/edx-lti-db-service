@@ -49,7 +49,7 @@ public class ModelViewProcessor {
 
         session.setAttribute("task" + taskId, tasks[taskId]);
 
-        checkLisParams(sourcedId, serviceUrl, session);
+        checkLisParams(sourcedId, serviceUrl, session, taskId);
 
         TasksForm queryForm = new TasksForm();
         model.put("query", queryForm);
@@ -59,11 +59,7 @@ public class ModelViewProcessor {
 
     public String renderResult(String labId, HttpServletRequest request,
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
-
-        String username = getUsername(request);
-
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
-        model.put("username", username);
         model.put("numberOfLab", labId);
 
         Task task = (Task) request.getSession().getAttribute("task" + taskId);
@@ -78,8 +74,8 @@ public class ModelViewProcessor {
         model.put("rating", String.format("%.2f", task.getRating() * 100) + "%");
 
         try {
-            String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME);
-            String sourcedId = (String) request.getSession().getAttribute(LIS_SOURCED_ID_NAME);
+            String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME + taskId);
+            String sourcedId = (String) request.getSession().getAttribute(LIS_SOURCED_ID_NAME + taskId);
 
             log.debug("Push score to URL: " + serviceUrl);
 
@@ -92,14 +88,14 @@ public class ModelViewProcessor {
         return PATH_TO_RESULTS_PAGE;
     }
 
-    public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session) {
-        String sessionSourcedId = (String) session.getAttribute(LIS_SOURCED_ID_NAME);
-        String sessionOutcomeUrl = (String) session.getAttribute(LIS_OUTCOME_URL_NAME);
+    public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session, int taskId) {
+        String sessionSourcedId = (String) session.getAttribute(LIS_SOURCED_ID_NAME + taskId);
+        String sessionOutcomeUrl = (String) session.getAttribute(LIS_OUTCOME_URL_NAME + taskId);
         if (sourcedId != null && !sourcedId.equals(sessionSourcedId)) {
-            session.setAttribute(LIS_SOURCED_ID_NAME, sourcedId);
+            session.setAttribute(LIS_SOURCED_ID_NAME + taskId, sourcedId);
         }
         if (outcomeUrl != null && !outcomeUrl.equals(sessionOutcomeUrl)) {
-            session.setAttribute(LIS_OUTCOME_URL_NAME, outcomeUrl);
+            session.setAttribute(LIS_OUTCOME_URL_NAME + taskId, outcomeUrl);
         }
     }
 

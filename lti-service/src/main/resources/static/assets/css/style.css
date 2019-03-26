@@ -14,3 +14,15 @@ body {
 #shell .cell, #shell .header{
     color: white;
 }
+
+.button-same-row{
+    width: 100px !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+}
+
+.textarea-same-row{
+    margin-right: 120px !important;
+    width: calc(100% - 120px) !important;
+}

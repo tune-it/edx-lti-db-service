@@ -9,8 +9,7 @@
 <body ng-app="BlankApp" ng-cloak>
 <div ng-cloak="" flex>
     <md-content layout-padding="">
-        <div>Обработан результат студента <span th:text="${username}"></span></div>
-        <div>Верных ответов:<span th:text="${rating}"></span></div>
+        <div>Результат:<span th:text="${rating}"></span></div>
 
         <pre><code class="sql" th:text="${queryText}"></code></pre>
     </md-content>
