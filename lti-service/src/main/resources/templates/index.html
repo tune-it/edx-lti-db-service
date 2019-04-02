@@ -12,6 +12,7 @@
     <md-content layout-padding="">
         <form method="post" th:object="${query}" th:action="@{/api/rest/lti/db/result/__${taskId}__}">
             <input type="hidden" name="custom_labId" th:value="${numberOfLab}">
+            <input type="hidden" name="provider" th:value="${userID}">
             <md-input-container class="md-block">
                 <div id="text-task" class="textarea-same-row" th:text="${task}"></div>
                 <textarea id="text-answer" class="textarea-same-row" th:field="*{textQuery}" md-select-on-focus>

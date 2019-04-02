@@ -47,6 +47,7 @@ public class DevLtiHandler implements LtiHandler {
     @PostMapping(RESULT_QUERY_URL)
     public String handleResultsQuery(
             @RequestParam(name=LIS_LAB_ID_NAME, required = false) String labId,
+            @RequestParam(name = USERNAME_NAME) String username,
             HttpServletRequest request,
             Map<String, Object> model,
             @ModelAttribute TasksForm queryForm,
@@ -57,7 +58,7 @@ public class DevLtiHandler implements LtiHandler {
         checkUser(request);
 
         // redirect call to logical unit
-        return modelViewProcessor.renderResult(labId, request, model, queryForm, taskId);
+        return modelViewProcessor.renderResult(labId, request, username, model, queryForm, taskId);
     }
 
     private void checkUser(HttpServletRequest request) {

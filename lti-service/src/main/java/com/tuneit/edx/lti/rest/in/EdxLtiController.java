@@ -46,7 +46,6 @@ public class EdxLtiController implements LtiHandler {
     ) {
 
         // pre handling here
-        log.info("MAIN_QUERY : {}, {}, {}", labId, sourcedId, serviceUrl);
         // redirect call to logical unit
         return modelViewProcessor.renderMain(labId, sourcedId, serviceUrl, request, model, taskId);
     }
@@ -55,6 +54,7 @@ public class EdxLtiController implements LtiHandler {
     @PostMapping(RESULT_QUERY_URL)
     public String handleResultsQuery(
             @RequestParam(name = LIS_LAB_ID_NAME) String labId,
+            @RequestParam(name = USERNAME_NAME) String username,
             HttpServletRequest request,
             Map<String, Object> model,
             @ModelAttribute TasksForm queryForm,
@@ -64,6 +64,6 @@ public class EdxLtiController implements LtiHandler {
         // you can add pre handling here
 
         // redirect call to logical unit
-        return modelViewProcessor.renderResult(labId, request, model, queryForm, taskId);
+        return modelViewProcessor.renderResult(labId, request, username, model, queryForm, taskId);
     }
 }

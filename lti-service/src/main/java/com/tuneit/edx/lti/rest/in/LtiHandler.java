@@ -13,6 +13,8 @@ public interface LtiHandler {
 
     String LIS_LAB_ID_NAME = "custom_labId";
 
+    String USERNAME_NAME = "provider";
+
     String MAIN_QUERY_URL = "/api/rest/lti/db/task{taskId}";
 
     String RESULT_QUERY_URL = "/api/rest/lti/db/result/{taskId}";
@@ -20,7 +22,7 @@ public interface LtiHandler {
     String handleMainQuery(String labId, String sourcedId, String serviceUrl,
                            HttpServletRequest request, Map<String, Object> model, int taskId);
 
-    String handleResultsQuery(String labId,
+    String handleResultsQuery(String labId, String username,
                               HttpServletRequest request, Map<String, Object> model, TasksForm queryForm, int taskId);
 
 }

@@ -6,17 +6,17 @@ import com.tuneit.edx.lti.config.WebConfig;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
-
-import static com.tuneit.edx.lti.rest.in.LtiHandler.LIS_OUTCOME_URL_NAME;
-import static com.tuneit.edx.lti.rest.in.LtiHandler.LIS_SOURCED_ID_NAME;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
@@ -25,7 +25,7 @@ public class ModelViewProcessor {
 
     private static final String PATH_TO_MAIN_PAGE = "index";
     private static final String PATH_TO_RESULTS_PAGE = "result";
-    private static final Object SESSION_LOCK = new Object();
+    private static final Map<String, Map<Integer, LTIKey>> TASK_MAP = new ConcurrentHashMap<>();
     // TODO see ticket #3
     private static int variant = 0;
     @Autowired
@@ -35,29 +35,27 @@ public class ModelViewProcessor {
 
     public String renderMain(String labId, String sourcedId, String serviceUrl,
                              HttpServletRequest request, Map<String, Object> model, int taskId) {
-        EdxUserInfo edxUserInfo = new EdxUserInfo();
         String[] splittedSourceId = sourcedId.split(":");
-        edxUserInfo.setUsername(splittedSourceId[splittedSourceId.length - 1]);
-        request.setAttribute(WebConfig.ATTRIBUTE_USER_INFO, edxUserInfo);
-
-        String username = getUsername(request);
-
-        HttpSession session = request.getSession();
+        String username = splittedSourceId[splittedSourceId.length - 1];
 
         /*  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId);
+        model.put("userID", username);
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        Task task = service.getTask(username, labId, taskId - 1, String.valueOf(/*variant++*/variant), 0);
+        Task task = service.getTask(username, labId, taskId, String.valueOf(/*variant++*/variant), 0);
         model.put("task", task.getQuestion());
         model.put("taskId", taskId);
 
-        synchronized (SESSION_LOCK) {
-            session.setAttribute("task" + taskId, task);
+        synchronized (TASK_MAP) {
+            if(!TASK_MAP.containsKey(username)){
+                TASK_MAP.put(username, new ConcurrentHashMap<>());
+            }
         }
-
-        checkLisParams(sourcedId, serviceUrl, session, taskId);
+        Map<Integer, LTIKey> LTIKeys = TASK_MAP.get(username);
+        LTIKeys.put(taskId, new LTIKey(sourcedId, serviceUrl));
+        TASK_MAP.put(username, LTIKeys);
 
         TasksForm queryForm = new TasksForm();
         model.put("query", queryForm);
@@ -65,14 +63,14 @@ public class ModelViewProcessor {
         return PATH_TO_MAIN_PAGE;
     }
 
-    public String renderResult(String labId, HttpServletRequest request,
+    public String renderResult(String labId, HttpServletRequest request, String username,
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId);
-
-        Task task = (Task) request.getSession().getAttribute("task" + taskId);
+        Task task = service.getTask(username, labId, taskId, String.valueOf(/*variant++*/variant), 0);
         task.setAnswer(queryForm.getTextQuery());
 
+        log.info("{} result for task{}", username, taskId);
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));
 
         service.checkTasks(task);
@@ -81,35 +79,17 @@ public class ModelViewProcessor {
 
         model.put("rating", String.format("%.2f", task.getRating() * 100) + "%");
 
+
         try {
-            String serviceUrl = (String) request.getSession().getAttribute(LIS_OUTCOME_URL_NAME + taskId);
-            String sourcedId = (String) request.getSession().getAttribute(LIS_SOURCED_ID_NAME + taskId);
-
-            log.debug("Push score to URL: " + serviceUrl);
-
-            int result = scoreSender.push(sourcedId, serviceUrl, task.getRating());
-            log.debug("RETURN CODE = " + result);
+            LTIKey ltiKey = TASK_MAP.get(username).get(taskId);
+            log.info("Push score to URL: " + ltiKey.getOutcomeUrl());
+            scoreSender.push(ltiKey.getSourcedId(), ltiKey.getOutcomeUrl(), task.getRating());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return PATH_TO_RESULTS_PAGE;
     }
-
-    public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session, int taskId) {
-        String sessionSourcedId = (String) session.getAttribute(LIS_SOURCED_ID_NAME + taskId);
-        String sessionOutcomeUrl = (String) session.getAttribute(LIS_OUTCOME_URL_NAME + taskId);
-        synchronized (SESSION_LOCK) {
-            if (sourcedId != null && !sourcedId.equals(sessionSourcedId)) {
-                session.setAttribute(LIS_SOURCED_ID_NAME + taskId, sourcedId);
-            }
-            if (outcomeUrl != null && !outcomeUrl.equals(sessionOutcomeUrl)) {
-                session.setAttribute(LIS_OUTCOME_URL_NAME + taskId, outcomeUrl);
-            }
-        }
-    }
-
-    // TODO move to Task.class or some TaskUtil
 
     private String getSQLStringWithComments(Task task) {
         return "# \n# " +
@@ -120,10 +100,11 @@ public class ModelViewProcessor {
                 task.getAnswer();
     }
 
-    private String getUsername(HttpServletRequest request) {
-        EdxUserInfo userInfo = (EdxUserInfo) request.getAttribute(WebConfig.ATTRIBUTE_USER_INFO);
-
-        return userInfo == null ? "Unknown" :
-                (userInfo.getUsername() == null ? "Guest" : userInfo.getUsername());
+    @Data
+    @AllArgsConstructor
+    @ToString
+    private static class LTIKey {
+        private String sourcedId;
+        private String outcomeUrl;
     }
 }

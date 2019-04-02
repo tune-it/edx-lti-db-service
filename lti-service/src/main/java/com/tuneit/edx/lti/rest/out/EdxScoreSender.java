@@ -44,7 +44,7 @@ public class EdxScoreSender implements ScoreSender {
         HttpResponse httpResponse = client.execute(request);
         HttpEntity entity = httpResponse.getEntity();
         String responseString = EntityUtils.toString(entity, "UTF-8");
-        log.debug("RESPONSE ENTITY:\n{}", responseString);
+        log.info("RESPONSE ENTITY:\n{}", responseString);
         return httpResponse.getStatusLine().getStatusCode();
     }
 }
