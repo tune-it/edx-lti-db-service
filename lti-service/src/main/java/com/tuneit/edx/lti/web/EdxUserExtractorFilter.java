@@ -5,9 +5,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tuneit.edx.lti.config.WebConfig;
 import com.tuneit.edx.lti.to.EdxUserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,6 +22,7 @@ import java.util.Arrays;
  * edx-user-info extractor
  */
 @Component
+@Slf4j
 public class EdxUserExtractorFilter implements Filter {
 
     @Override
@@ -50,20 +57,18 @@ public class EdxUserExtractorFilter implements Filter {
                             .replaceAll("\\\\054", ",")
                             .replaceAll("\\\\", "");
 
-                    System.out.println("VALUE FOR PARSING");
-                    System.out.println(value);
-
+                    log.info("VALUE FOR PARSING {}", value);
                     ObjectMapper om = new ObjectMapper();
                     om.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
                     EdxUserInfo userInfo = om.readValue(value, EdxUserInfo.class);
-                    System.out.println("Detect edx-user-info");
+                    log.info("Detect edx-user-info");
                     servletRequest.setAttribute(WebConfig.ATTRIBUTE_USER_INFO, userInfo);
                 } catch (JsonMappingException jme) {
                     jme.printStackTrace();
                 }
             }
         } catch (NullPointerException npe) {
-            System.out.println("USER NOT FOUND");
+            log.info("USER NOT FOUND");
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

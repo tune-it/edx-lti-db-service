@@ -32,8 +32,14 @@ public class ModelViewProcessor {
     @Autowired
     private ScoreSender scoreSender;
 
+    private static final Object SESSION_LOCK = new Object();
+
     public String renderMain(String labId, String sourcedId, String serviceUrl,
                              HttpServletRequest request, Map<String, Object> model, int taskId) {
+        EdxUserInfo edxUserInfo = new EdxUserInfo();
+        String[] splittedSourceId = sourcedId.split(":");
+        edxUserInfo.setUsername(splittedSourceId[splittedSourceId.length - 1]);
+        request.setAttribute(WebConfig.ATTRIBUTE_USER_INFO, edxUserInfo);
 
         String username = getUsername(request);
 
@@ -43,11 +49,14 @@ public class ModelViewProcessor {
         model.put("numberOfLab", labId);
 
         // TODO temporary hardcode. See ticket #3 and #2
-        Task[] tasks = service.getTasks(username, labId, String.valueOf(variant++), 0);
+        // TODO FIX variant increment
+        Task[] tasks = service.getTasks(username, labId, String.valueOf(/*variant++*/variant), 0);
         model.put("task", tasks[taskId].getQuestion());
         model.put("taskId", taskId);
 
-        session.setAttribute("task" + taskId, tasks[taskId]);
+        synchronized (SESSION_LOCK) {
+            session.setAttribute("task" + taskId, tasks[taskId]);
+        }
 
         checkLisParams(sourcedId, serviceUrl, session, taskId);
 
@@ -91,11 +100,13 @@ public class ModelViewProcessor {
     public void checkLisParams(String sourcedId, String outcomeUrl, HttpSession session, int taskId) {
         String sessionSourcedId = (String) session.getAttribute(LIS_SOURCED_ID_NAME + taskId);
         String sessionOutcomeUrl = (String) session.getAttribute(LIS_OUTCOME_URL_NAME + taskId);
-        if (sourcedId != null && !sourcedId.equals(sessionSourcedId)) {
-            session.setAttribute(LIS_SOURCED_ID_NAME + taskId, sourcedId);
-        }
-        if (outcomeUrl != null && !outcomeUrl.equals(sessionOutcomeUrl)) {
-            session.setAttribute(LIS_OUTCOME_URL_NAME + taskId, outcomeUrl);
+        synchronized (SESSION_LOCK) {
+            if (sourcedId != null && !sourcedId.equals(sessionSourcedId)) {
+                session.setAttribute(LIS_SOURCED_ID_NAME + taskId, sourcedId);
+            }
+            if (outcomeUrl != null && !outcomeUrl.equals(sessionOutcomeUrl)) {
+                session.setAttribute(LIS_OUTCOME_URL_NAME + taskId, outcomeUrl);
+            }
         }
     }
 
