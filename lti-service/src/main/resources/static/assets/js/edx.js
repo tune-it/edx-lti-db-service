@@ -12,7 +12,7 @@ app.controller('AppCtrl', function($sce, $scope, $http) {
 		        $.ajax({
                     method: 'POST',
                     url: '/api/rest/lti/shell/sql/query',
-                    data: "query=" + command,
+                    data: "query=" + encodeURI(command),
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function (_data, status, headers, config) {
                     term.echo(_data, {raw: true}).resume();
