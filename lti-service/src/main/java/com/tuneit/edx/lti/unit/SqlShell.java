@@ -18,7 +18,7 @@ public class SqlShell {
         try {
             Schema schema = SchemaLoader.getSchema(0);
             SelectProcessor selectProc = new SelectProcessor();
-            result = selectProc.execute_select(schema, sql, 10, true);
+            result = selectProc.executeQuery(schema, sql, 10, true);
         }catch (Exception e) {
             return e.getMessage();
         }
