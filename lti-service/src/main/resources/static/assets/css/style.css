@@ -15,14 +15,14 @@ body {
     color: white;
 }
 
-.button-same-row{
-    width: 100px !important;
-    position: absolute !important;
-    top: 0 !important;
-    right: 0 !important;
+#submit.button-same-row{
+    width: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-.textarea-same-row{
-    margin-right: 120px !important;
-    width: calc(100% - 120px) !important;
+#text-task.textarea-same-row, #text-answer.textarea-same-row{
+    margin-right: 120px;
+    width: calc(100% - 120px);
 }

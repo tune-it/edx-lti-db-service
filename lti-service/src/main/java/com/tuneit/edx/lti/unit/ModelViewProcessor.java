@@ -25,14 +25,13 @@ public class ModelViewProcessor {
 
     private static final String PATH_TO_MAIN_PAGE = "index";
     private static final String PATH_TO_RESULTS_PAGE = "result";
+    private static final Object SESSION_LOCK = new Object();
     // TODO see ticket #3
     private static int variant = 0;
     @Autowired
     private TaskGeneratorService service;
     @Autowired
     private ScoreSender scoreSender;
-
-    private static final Object SESSION_LOCK = new Object();
 
     public String renderMain(String labId, String sourcedId, String serviceUrl,
                              HttpServletRequest request, Map<String, Object> model, int taskId) {
@@ -50,12 +49,12 @@ public class ModelViewProcessor {
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        Task[] tasks = service.getTasks(username, labId, String.valueOf(/*variant++*/variant), 0);
-        model.put("task", tasks[taskId].getQuestion());
+        Task task = service.getTask(username, labId, taskId - 1, String.valueOf(/*variant++*/variant), 0);
+        model.put("task", task.getQuestion());
         model.put("taskId", taskId);
 
         synchronized (SESSION_LOCK) {
-            session.setAttribute("task" + taskId, tasks[taskId]);
+            session.setAttribute("task" + taskId, task);
         }
 
         checkLisParams(sourcedId, serviceUrl, session, taskId);
@@ -113,14 +112,12 @@ public class ModelViewProcessor {
     // TODO move to Task.class or some TaskUtil
 
     private String getSQLStringWithComments(Task task) {
-        return new StringBuilder()
-                .append("# \n# ")
-                .append(task.getQuestion())
-                .append("\n# \n# ")
-                .append((task.getRating() < 0.1f) ? "Ответ неверный" : "Ответ верный")
-                .append("\n# \n")
-                .append(task.getAnswer())
-                .toString();
+        return "# \n# " +
+                task.getQuestion() +
+                "\n# \n# " +
+                ((task.getRating() < 0.1f) ? "Ответ неверный" : "Ответ верный") +
+                "\n# \n" +
+                task.getAnswer();
     }
 
     private String getUsername(HttpServletRequest request) {
