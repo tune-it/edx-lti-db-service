@@ -1,6 +1,6 @@
 package com.tuneit.edx.lti;
 
-import com.tuneit.courses.TaskGeneratorConfiguration;
+import com.tuneit.courses.lab1.TaskGeneratorConfiguration;
 import com.tuneit.edx.lti.config.RequestContextListenerConfiguration;
 import com.tuneit.edx.lti.config.WebConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +20,14 @@ public class Main extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
-    
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(
-            Main.class,
-            WebConfig.class,
-            RequestContextListenerConfiguration.class
-            // may be add other config classes here
+                Main.class,
+                WebConfig.class,
+                RequestContextListenerConfiguration.class
+                // may be add other config classes here
         );
     }
 }

@@ -1,10 +1,8 @@
 package com.tuneit.edx.lti.unit;
 
-import com.tuneit.courses.Task;
-import com.tuneit.courses.TaskGeneratorService;
-import com.tuneit.edx.lti.config.WebConfig;
+import com.tuneit.courses.lab1.Task;
+import com.tuneit.courses.lab1.TaskGeneratorService;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
-import com.tuneit.edx.lti.to.EdxUserInfo;
 import com.tuneit.edx.lti.to.TasksForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,7 +47,7 @@ public class ModelViewProcessor {
         model.put("taskId", taskId);
 
         synchronized (TASK_MAP) {
-            if(!TASK_MAP.containsKey(username)){
+            if (!TASK_MAP.containsKey(username)) {
                 TASK_MAP.put(username, new ConcurrentHashMap<>());
             }
         }
