@@ -2,6 +2,10 @@ package com.tuneit.edx.lti.unit;
 
 import com.tuneit.courses.lab1.Task;
 import com.tuneit.courses.lab1.TaskGeneratorService;
+import com.tuneit.courses.lab1.db.DBTaskGeneratorService;
+import com.tuneit.courses.lab1.db.LabTaskQA;
+import com.tuneit.courses.lab1.db.schema.Schema;
+import com.tuneit.courses.lab1.db.schema.SchemaLoader;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.TasksForm;
 import lombok.AllArgsConstructor;
@@ -68,8 +72,9 @@ public class ModelViewProcessor {
         Task task = service.getTask(username, labId, taskId, String.valueOf(/*variant++*/variant), 0);
         task.setAnswer(queryForm.getTextQuery());
 
-        log.info("{} result for task{}", username, taskId);
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));
+
+        log.info("{} result for task{}\n{}", username, taskId, task);
 
         service.checkTasks(task);
 
