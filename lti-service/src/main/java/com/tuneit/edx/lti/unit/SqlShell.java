@@ -1,9 +1,8 @@
 package com.tuneit.edx.lti.unit;
-
-import com.tuneit.courses.lab1.db.SelectProcessor;
-import com.tuneit.courses.lab1.db.SelectResult;
-import com.tuneit.courses.lab1.db.schema.Schema;
-import com.tuneit.courses.lab1.db.schema.SchemaLoader;
+import com.tuneit.courses.SelectProcessor;
+import com.tuneit.courses.SelectResult;
+import com.tuneit.courses.db.schema.Schema;
+import com.tuneit.courses.db.schema.SchemaLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ public class SqlShell {
     public String exec(String sql) {
         SelectResult result;
         try {
-            Schema schema = SchemaLoader.getSchema(0);
+            Schema schema = SchemaLoader.getSchema(1);
             SelectProcessor selectProc = new SelectProcessor();
             result = selectProc.executeQuery(schema, sql, 10, true);
         } catch (Exception e) {

@@ -1,11 +1,7 @@
 package com.tuneit.edx.lti.unit;
 
-import com.tuneit.courses.lab1.Task;
-import com.tuneit.courses.lab1.TaskGeneratorService;
-import com.tuneit.courses.lab1.db.DBTaskGeneratorService;
-import com.tuneit.courses.lab1.db.LabTaskQA;
-import com.tuneit.courses.lab1.db.schema.Schema;
-import com.tuneit.courses.lab1.db.schema.SchemaLoader;
+import com.tuneit.courses.Task;
+import com.tuneit.courses.TaskGeneratorService;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.TasksForm;
 import lombok.AllArgsConstructor;
@@ -46,7 +42,7 @@ public class ModelViewProcessor {
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        Task task = service.getTask(username, labId, taskId, String.valueOf(/*variant++*/variant), 0);
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)), taskId, String.valueOf(/*variant++*/variant), 0);
         model.put("task", task.getQuestion());
         model.put("taskId", taskId);
 
@@ -69,7 +65,7 @@ public class ModelViewProcessor {
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId);
-        Task task = service.getTask(username, labId, taskId, String.valueOf(/*variant++*/variant), 0);
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)), taskId, String.valueOf(/*variant++*/variant), 0);
         task.setAnswer(queryForm.getTextQuery());
 
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));

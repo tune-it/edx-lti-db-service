@@ -1,6 +1,6 @@
 package com.tuneit.edx.lti;
 
-import com.tuneit.courses.lab1.TaskGeneratorConfiguration;
+import com.tuneit.courses.TaskGeneratorConfiguration;
 import com.tuneit.edx.lti.config.RequestContextListenerConfiguration;
 import com.tuneit.edx.lti.config.WebConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,9 @@ import org.springframework.context.annotation.Import;
 public class Main extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
+
+        String lab3 = "lab03";
+        System.out.println(Integer.valueOf(lab3.substring(3)));
         SpringApplication.run(Main.class, args);
     }
 
