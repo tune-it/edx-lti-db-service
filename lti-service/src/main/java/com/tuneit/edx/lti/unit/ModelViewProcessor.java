@@ -42,7 +42,8 @@ public class ModelViewProcessor {
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)), taskId, String.valueOf(/*variant++*/variant), 0);
+        log.info("Task data: username-{} lab-{}, task-{}", username, Integer.valueOf(labId.substring(3))-1, taskId);
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3))-1, taskId, String.valueOf(/*variant++*/variant), 0); //FIXME
         model.put("task", task.getQuestion());
         model.put("taskId", taskId);
 
@@ -65,7 +66,7 @@ public class ModelViewProcessor {
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId);
-        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)), taskId, String.valueOf(/*variant++*/variant), 0);
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3))-1, taskId, String.valueOf(/*variant++*/variant), 0);//FIXME
         task.setAnswer(queryForm.getTextQuery());
 
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));
