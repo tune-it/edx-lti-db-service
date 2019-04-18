@@ -42,7 +42,6 @@ public class ModelViewProcessor {
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        log.info("Task data: username-{} lab-{}, task-{}", username, Integer.valueOf(labId.substring(3))-1, taskId);
         Task task = service.getTask(username, Integer.valueOf(labId.substring(3))-1, taskId, String.valueOf(/*variant++*/variant), 0); //FIXME
         model.put("task", task.getQuestion());
         model.put("taskId", taskId);
@@ -71,14 +70,12 @@ public class ModelViewProcessor {
 
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));
 
-        log.info("{} result for task{}\n{}", username, taskId, task);
-
         service.checkTasks(task);
 
+        log.info("{} result for task{}\n{}", username, taskId, task);
+
         model.put("queryText", getSQLStringWithComments(task));
-
         model.put("rating", String.format("%.2f", task.getRating() * 100) + "%");
-
 
         try {
             LTIKey ltiKey = TASK_MAP.get(username).get(taskId);
