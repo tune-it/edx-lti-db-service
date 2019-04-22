@@ -9,6 +9,7 @@
 <body ng-app="BlankApp" ng-cloak>
 <div ng-cloak="" flex>
     <md-content layout-padding="">
+        <div>ID результата:<span th:text="${id}"></span></div>
         <div>Результат:<span th:text="${rating}"></span></div>
 
         <pre><code class="sql" th:text="${queryText}"></code></pre>

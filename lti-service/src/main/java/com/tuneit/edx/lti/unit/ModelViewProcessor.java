@@ -2,6 +2,10 @@ package com.tuneit.edx.lti.unit;
 
 import com.tuneit.courses.Task;
 import com.tuneit.courses.TaskGeneratorService;
+import com.tuneit.courses.db.Lab;
+import com.tuneit.courses.db.LabTaskQA;
+import com.tuneit.courses.db.schema.Schema;
+import com.tuneit.courses.db.schema.SchemaLoader;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
 import com.tuneit.edx.lti.to.TasksForm;
 import lombok.AllArgsConstructor;
@@ -13,6 +17,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,7 +47,7 @@ public class ModelViewProcessor {
 
         // TODO temporary hardcode. See ticket #3 and #2
         // TODO FIX variant increment
-        Task task = service.getTask(username, Integer.valueOf(labId.substring(3))-1, taskId, String.valueOf(/*variant++*/variant), 0); //FIXME
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)) - 1, taskId, String.valueOf(/*variant++*/variant), 0); //FIXME
         model.put("task", task.getQuestion());
         model.put("taskId", taskId);
 
@@ -65,16 +70,21 @@ public class ModelViewProcessor {
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
         /**  вставляем параметры, необходимые для рендера страницы в мапу  */
         model.put("numberOfLab", labId);
-        Task task = service.getTask(username, Integer.valueOf(labId.substring(3))-1, taskId, String.valueOf(/*variant++*/variant), 0);//FIXME
+        Task task = service.getTask(username, Integer.valueOf(labId.substring(3)) - 1, taskId, String.valueOf(/*variant++*/variant), 0);//FIXME
         task.setAnswer(queryForm.getTextQuery());
 
         task.setComplete(!(task.getAnswer() == null || task.getAnswer().isEmpty()));
 
         service.checkTasks(task);
 
+        int resultId = (new Date().toString() + username).hashCode();
+
         log.info("{} result for task{}\n{}", username, taskId, task);
+        log.info("ID: {}. Question: {}. Student Answer: {}. System answer: {}",
+                resultId, task.getQuestion(), task.getAnswer(), getCorrectAnswer(task));
 
         model.put("queryText", getSQLStringWithComments(task));
+        model.put("id", resultId);
         model.put("rating", String.format("%.2f", task.getRating() * 100) + "%");
 
         try {
@@ -86,6 +96,19 @@ public class ModelViewProcessor {
         }
 
         return PATH_TO_RESULTS_PAGE;
+    }
+
+    private String getCorrectAnswer(Task task) {
+        try {
+            Schema schema = SchemaLoader.getSchema(task.getLabId());
+
+            Lab lab = schema.getLab();
+            LabTaskQA labTaskQA = lab.generate(task);
+
+            return labTaskQA.getCorrectAnswer();
+        } catch (Exception e){
+            return "Failed to get a answer";
+        }
     }
 
     private String getSQLStringWithComments(Task task) {
