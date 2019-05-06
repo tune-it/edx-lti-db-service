@@ -78,6 +78,7 @@ public class ModelViewProcessor {
         service.checkTasks(task);
 
         int resultId = (new Date().toString() + username).hashCode();
+        resultId = Math.abs(resultId);
 
         log.info("{} result for task{}\n{}", username, taskId, task);
         log.info("ID: {}. Question: {}. Student Answer: {}. System answer: {}",
@@ -106,7 +107,7 @@ public class ModelViewProcessor {
             LabTaskQA labTaskQA = lab.generate(task);
 
             return labTaskQA.getCorrectAnswer();
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Failed to get a answer";
         }
     }
