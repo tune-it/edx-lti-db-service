@@ -1,6 +1,7 @@
 package com.tuneit.edx.lti.unit;
-import com.tuneit.courses.SelectProcessor;
-import com.tuneit.courses.SelectResult;
+
+import com.tuneit.courses.db.SelectProcessor;
+import com.tuneit.courses.db.SelectResult;
 import com.tuneit.courses.db.schema.Schema;
 import com.tuneit.courses.db.schema.SchemaLoader;
 import lombok.extern.slf4j.Slf4j;

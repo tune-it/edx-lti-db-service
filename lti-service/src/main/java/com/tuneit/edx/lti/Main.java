@@ -1,6 +1,6 @@
 package com.tuneit.edx.lti;
 
-import com.tuneit.courses.TaskGeneratorConfiguration;
+import com.tuneit.courses.db.TaskGeneratorConfiguration;
 import com.tuneit.edx.lti.config.RequestContextListenerConfiguration;
 import com.tuneit.edx.lti.config.WebConfig;
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
 package com.tuneit.edx.lti.unit;
 
-import com.tuneit.courses.Task;
-import com.tuneit.courses.TaskGeneratorService;
 import com.tuneit.courses.db.Lab;
 import com.tuneit.courses.db.LabTaskQA;
+import com.tuneit.courses.db.Task;
+import com.tuneit.courses.db.TaskGeneratorService;
 import com.tuneit.courses.db.schema.Schema;
 import com.tuneit.courses.db.schema.SchemaLoader;
 import com.tuneit.edx.lti.rest.out.ScoreSender;
