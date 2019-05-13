@@ -11,17 +11,6 @@
 		</filter>
 	</appender>
 
-	<appender name="DEV_FILE" class="ch.qos.logback.core.FileAppender">
-		<file>openedx-full.log</file>
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>DEBUG</level>
-		</filter>
-		<append>true</append>
-		<encoder>
-			<pattern>%-5level %logger{25} \(%line\) - %boldWhite(%msg%n)</pattern>
-		</encoder>
-	</appender>
-
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>${USER_HOME}/openedx.log</file>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -36,10 +25,6 @@
 	<root level="debug">
 		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
-	</root>
-
-	<root level="ALL">
-		<appender-ref ref="DEV_FILE" />
 	</root>
 
 	<logger name="org.apache.tomcat.util.net.NioEndpoint" level="OFF"/>
