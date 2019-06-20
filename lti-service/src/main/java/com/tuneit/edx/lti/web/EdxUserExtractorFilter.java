@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * edx-user-info extractor
+ * edx-user-info extractor filter
+ * @author alex
  */
 @Component
 @Slf4j

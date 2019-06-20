@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * Handler for SQL shell LTI requests
+ * @author alex
+ */
 @Slf4j
 @Controller
 @CrossOrigin

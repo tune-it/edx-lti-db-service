@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 /**
+ * Main score sender class
  * @author jek
  * @author alex
  * @author adpashnin
@@ -32,6 +33,14 @@ public class EdxScoreSender implements ScoreSender {
     @Value("${client_secret}")
     private String CLIENT_SECRET;
 
+    /**
+     * Pushes result into EdX LMS
+     * @param sourcedId sourceId parameter
+     * @param outcomeServiceUrl URL of the outcome service
+     * @param rating Rating [0-1]
+     * @return Push HTTP request status
+     * @throws IOException 
+     */
     public int push(String sourcedId, String outcomeServiceUrl, float rating) throws IOException {
         HttpPost request = null;
 

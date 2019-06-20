@@ -36,12 +36,22 @@ public class ModelViewProcessor {
     @Autowired
     private ScoreSender scoreSender;
 
+    /**
+     * Render main page of the service's web application
+     * @param labId Lab work ID
+     * @param sourcedId sourceId parameter
+     * @param serviceUrl LTI service URL
+     * @param request HTTP request to process
+     * @param model Map for store context
+     * @param taskId ID of the task
+     * @return Path to main page
+     */
     public String renderMain(String labId, String sourcedId, String serviceUrl,
                              HttpServletRequest request, Map<String, Object> model, int taskId) {
         String[] splittedSourceId = sourcedId.split(":");
         String username = splittedSourceId[splittedSourceId.length - 1];
 
-        /*  вставляем параметры, необходимые для рендера страницы в мапу  */
+        // Put parameters required for successful page rendering into map
         model.put("numberOfLab", labId);
         model.put("userID", username);
 
@@ -66,9 +76,20 @@ public class ModelViewProcessor {
         return PATH_TO_MAIN_PAGE;
     }
 
+    /**
+     * Render page with query check results
+     * @param labId Lab work ID
+     * @param request HTTP request to process
+     * @param username Name of the course participant user
+     * @param model Map for store context
+     * @param queryForm Query form reference
+     * @param taskId ID of the task
+     * @return Path to main page
+     */
     public String renderResult(String labId, HttpServletRequest request, String username,
                                Map<String, Object> model, TasksForm queryForm, int taskId) {
-        /**  вставляем параметры, необходимые для рендера страницы в мапу  */
+        
+        // Put parameters required for successful page rendering into map
         model.put("numberOfLab", labId);
         Task task = service.getTask(username, Integer.valueOf(labId.substring(3)) - 1, taskId, String.valueOf(/*variant++*/variant), 0);//FIXME
         task.setAnswer(queryForm.getTextQuery());
@@ -99,6 +120,11 @@ public class ModelViewProcessor {
         return PATH_TO_RESULTS_PAGE;
     }
 
+    /**
+     * Get correct answer query
+     * @param task Task
+     * @return Correct answer string
+     */
     private String getCorrectAnswer(Task task) {
         try {
             Schema schema = SchemaLoader.getSchema(task.getLabId());
@@ -112,6 +138,11 @@ public class ModelViewProcessor {
         }
     }
 
+    /**
+     * Get debug output string for task
+     * @param task Task
+     * @return Formatted debug output string
+     */
     private String getSQLStringWithComments(Task task) {
         return "# \n# " +
                 task.getQuestion() +

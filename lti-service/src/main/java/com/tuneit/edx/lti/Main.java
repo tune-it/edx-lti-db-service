@@ -11,6 +11,10 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * Startup entry point of Spring application
+ * @author alex
+ */
 @Slf4j
 @Configuration
 @SpringBootApplication

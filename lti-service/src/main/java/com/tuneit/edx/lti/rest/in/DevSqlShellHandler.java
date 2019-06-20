@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * SQL shell handler for developer purposes. Disabled in production profile.
+ * @author alex
+ */
 @Slf4j
 @Controller
 @Profile("dev")

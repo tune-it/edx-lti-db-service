@@ -8,11 +8,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+/**
+ * SQL shell processor
+ * @author alex
+ */
 @Slf4j
 @Component
 @Profile("prod")
 public class SqlShell {
 
+    /**
+     * Execute SQL query
+     * @param sql Query
+     * @return Request processing result
+     */
     public String exec(String sql) {
         SelectResult result;
         try {

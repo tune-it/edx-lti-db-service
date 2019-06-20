@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Обертка для быстрого парсинга edx-user-info
- * в Java-объект
+ * Wrapper for edx-user-info quick parsing 
+ * into Java object
  */
 @Getter
 @Setter

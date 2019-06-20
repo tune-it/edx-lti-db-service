@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * LTI requests handler for developer purposes. Disabled in production profile
+ * @author alex
+ */
 @Slf4j
 @Controller
 @Profile("dev")
