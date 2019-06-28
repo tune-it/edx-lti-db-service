@@ -1,7 +1,7 @@
-package com.tuneit.edx.lti.rest.in;
+package ru.ifmo.edx.lti.rest.in;
 
-import com.tuneit.edx.lti.to.TasksForm;
-import com.tuneit.edx.lti.unit.ModelViewProcessor;
+import ru.ifmo.edx.lti.to.TasksForm;
+import ru.ifmo.edx.lti.unit.ModelViewProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.imsglobal.aspect.Lti;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.tuneit.edx.lti.config;
+package ru.ifmo.edx.lti.config;
 
-import com.tuneit.edx.lti.web.EdxUserExtractorFilter;
+import ru.ifmo.edx.lti.web.EdxUserExtractorFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

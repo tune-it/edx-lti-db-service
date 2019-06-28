@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.unit;
+package ru.ifmo.edx.lti.unit;
 
 import com.tuneit.courses.db.SelectProcessor;
 import com.tuneit.courses.db.SelectResult;

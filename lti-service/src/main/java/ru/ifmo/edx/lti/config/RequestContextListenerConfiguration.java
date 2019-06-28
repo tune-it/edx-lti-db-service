@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.config;
+package ru.ifmo.edx.lti.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextListener;

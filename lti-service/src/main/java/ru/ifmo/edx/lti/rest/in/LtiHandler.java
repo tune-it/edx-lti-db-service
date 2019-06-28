@@ -1,6 +1,6 @@
-package com.tuneit.edx.lti.rest.in;
+package ru.ifmo.edx.lti.rest.in;
 
-import com.tuneit.edx.lti.to.TasksForm;
+import ru.ifmo.edx.lti.to.TasksForm;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

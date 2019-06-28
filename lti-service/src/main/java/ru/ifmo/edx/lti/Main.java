@@ -1,8 +1,8 @@
-package com.tuneit.edx.lti;
+package ru.ifmo.edx.lti;
 
 import com.tuneit.courses.db.TaskGeneratorConfiguration;
-import com.tuneit.edx.lti.config.RequestContextListenerConfiguration;
-import com.tuneit.edx.lti.config.WebConfig;
+import ru.ifmo.edx.lti.config.RequestContextListenerConfiguration;
+import ru.ifmo.edx.lti.config.WebConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

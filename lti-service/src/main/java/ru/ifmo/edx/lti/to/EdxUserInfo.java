@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.to;
+package ru.ifmo.edx.lti.to;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

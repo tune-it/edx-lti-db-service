@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.web;
+package ru.ifmo.edx.lti.web;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.unit;
+package ru.ifmo.edx.lti.unit;
 
 import com.tuneit.courses.db.Lab;
 import com.tuneit.courses.db.LabTaskQA;
@@ -6,8 +6,8 @@ import com.tuneit.courses.db.Task;
 import com.tuneit.courses.db.TaskGeneratorService;
 import com.tuneit.courses.db.schema.Schema;
 import com.tuneit.courses.db.schema.SchemaLoader;
-import com.tuneit.edx.lti.rest.out.ScoreSender;
-import com.tuneit.edx.lti.to.TasksForm;
+import ru.ifmo.edx.lti.rest.out.ScoreSender;
+import ru.ifmo.edx.lti.to.TasksForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;

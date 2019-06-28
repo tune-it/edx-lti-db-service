@@ -1,10 +1,10 @@
-package com.tuneit.edx.lti.web;
+package ru.ifmo.edx.lti.web;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tuneit.edx.lti.config.WebConfig;
-import com.tuneit.edx.lti.to.EdxUserInfo;
+import ru.ifmo.edx.lti.config.WebConfig;
+import ru.ifmo.edx.lti.to.EdxUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

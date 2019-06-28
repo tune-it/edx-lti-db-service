@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.rest.out;
+package ru.ifmo.edx.lti.rest.out;
 
 import lombok.extern.slf4j.Slf4j;
 import oauth.signpost.exception.OAuthException;

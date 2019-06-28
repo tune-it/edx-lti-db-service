@@ -1,4 +1,4 @@
-package com.tuneit.edx.lti.rest.in;
+package ru.ifmo.edx.lti.rest.in;
 
 public interface SqlShellHandler {
 
