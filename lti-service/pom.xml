@@ -26,13 +26,13 @@
         <relativePath/>
     </parent>
 
-    <repositories>
+    <distributionManagement>
         <repository>
-            <id>tuneit-public-repo</id>
-            <name>tuneit public repo</name>
-	        <url>https://nexus.tune-it.ru/repository/tuneit-public-repo/</url>
+            <id>nexus.tune-it</id>
+            <name>Public tune-it repository</name>
+            <url>https://nexus.tune-it.ru/repository/tuneit-public-repo/</url>
         </repository>
-    </repositories>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -85,13 +85,13 @@
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>
-            <version>2.3.0</version>
+            <version>2.5.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>converter-scalars</artifactId>
-            <version>2.3.0</version>
+            <version>2.5.0</version>
         </dependency>
 
         <dependency>
